@@ -7,6 +7,7 @@ from datetime import datetime
 from streamlit_folium import folium_static
 from folium.plugins import HeatMap
 import random
+import matplotlib.pyplot as plt
 
 # Load the data
 crash_data = pd.read_csv('crash_data.csv')
@@ -17,13 +18,21 @@ traffic_data = pd.read_csv('traffic_data.csv')
 #st.title('El Paso Data Dashboard')
 # Set up the Streamlit app
 st.set_page_config(page_title='El Paso Data Dashboard', page_icon=':bar_chart:')
+
+# Two lines
 st.title('El Paso Data Dashboard')
+st.subheader('Transportation, Environment and Community Health')
+
+# One Line
+#st.title('El Paso Data Dashboard \n Transportation, Environment and Community Health')
 
 # Add a dropdown to allow the user to select a data module
-# data_module = st.sidebar.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'])
+data_module = st.sidebar.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'])
 
 # Add a radio button group to allow the user to select a data module
-data_module = st.radio('Select a data module', ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'])
+#data_module = st.radio('Select a data module', ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'])
+
+
 
 # Define a dictionary of icons for each data module option
 # icons = {
@@ -35,7 +44,7 @@ data_module = st.radio('Select a data module', ['Crash Data 🚗', 'Traffic Data
 # # Add a selectbox to allow the user to select a data module
 # data_module = st.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'], format_func=lambda x: icons[x]+' '+x)
 
-if data_module == 'Crash Data 🚗':
+if data_module == 'Crash Data':
     # Set default values for start_date and end_date
     default_start_date = pd.to_datetime('2020-01-01')
     default_end_date = pd.to_datetime('2020-03-01')
@@ -44,8 +53,11 @@ if data_module == 'Crash Data 🚗':
     start_date = st.sidebar.date_input('Start date', default_start_date)
     end_date = st.sidebar.date_input('End date', default_end_date)
 
+
+    
+
     # Add options to select the type of map display
-    map_type = st.sidebar.selectbox('Map Display', ['Marker Cluster', 'Heatmap', 'Markers'])
+    map_type = st.sidebar.selectbox('Map_Display', ['Marker Cluster', 'Heatmap', 'Markers'])
 
     # Add options to filter by crash severity
     crash_severity = st.sidebar.selectbox('Crash Severity', ['TOTAL','NOT INJURED', 'SUSPECTED MINOR INJURY', 
@@ -76,8 +88,11 @@ if data_module == 'Crash Data 🚗':
     # st.sidebar.write('- Chengyue Wang')
     # st.sidebar.write('- Swapnil Samat')
     # st.sidebar.write('- Jeffrey Weidner') 
-    st.sidebar.image('utep-miners-logo.png', width=200)
-
+    # CTECH logo and UTEP logo are side-by-side
+    st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
+    #CTECH logo is below to UTEP logo
+    #st.sidebar.image('utep_new_logo.png', width=200)
+    #st.sidebar.image('CTECH.jpeg', width=200)
     if map_type == 'Markers':
         for index, row in filtered_data.iterrows():
             lat = row['Crash Latitude']
@@ -86,7 +101,13 @@ if data_module == 'Crash Data 🚗':
             marker.add_to(m)
     elif map_type == 'Heatmap':
         data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
-        folium.plugins.HeatMap(data).add_to(m)
+        heatmap_layer = HeatMap(data, name='Crashes Location Heatmap', min_opacity=0.2,
+                        blur=5, max_zoom=10, radius=10, gradient={0.2: 'blue', 0.4: 'lime', 0.6: 'yellow', 0.7: 'orange', 0.8: 'red', 1:'maroon'})
+        heatmap_layer.add_to(m)
+
+
+        #folium_static(m)
+        #folium.plugins.heatmap_layer.add_to(m)
     else:
         from folium.plugins import MarkerCluster
         marker_cluster = MarkerCluster()
@@ -100,7 +121,7 @@ if data_module == 'Crash Data 🚗':
     # Display the map in the Streamlit app
     folium_static(m)
 
-elif data_module == 'Traffic Data 🚦':
+elif data_module == 'Traffic Data':
     # Filter the data by date and time
     #date = st.date_input('Select a date', min_value=traffic_data['capturedtimestamp'].min().date(), max_value=traffic_data['capturedtimestamp'].max().date())
     #time = st.time_input('Select a time')
@@ -120,18 +141,23 @@ elif data_module == 'Traffic Data 🚦':
     # st.sidebar.write('- Chengyue Wang')
     # st.sidebar.write('- Swapnil Samat')
     # st.sidebar.write('- Jeffrey Weidner') 
-    st.sidebar.image('utep-miners-logo.png', width=200)
+
+    # CTECH logo and UTEP logo are side-by-side
+    st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
+    #CTECH logo is below to UTEP logo
+    #st.sidebar.image('utep_new_logo.png', width=200)
+    #st.sidebar.image('CTECH.jpeg', width=200)
 
     st.subheader('Speed-based Pattern Analysis')
-    speed_threshold = st.slider('Select a speed threshold', min_value=0, max_value=120, step=5, value=50)
+    speed_threshold = st.slider('Select a speed threshold (km/h)', min_value=0, max_value=120, step=5, value=50)
     speed_df = traffic_data[traffic_data['speed'] >= speed_threshold]
     if len(speed_df) > 0:
         st.write('Number of datapoints:', len(speed_df))
         st.write(speed_df)
-        st.write('Average speed:', speed_df['speed'].mean())
-        st.write('Max speed:', speed_df['speed'].max())
-        st.write('Min speed:', speed_df['speed'].min())
-        st.write('Standard deviation:', speed_df['speed'].std())
+        st.write('Average speed:', round(speed_df['speed'].mean(),2),'km/h')#round(answer, 2)
+        st.write('Max speed:', speed_df['speed'].max(),'km/h')
+        st.write('Min speed:', speed_df['speed'].min(),'km/h')
+        st.write('Standard deviation:', round(speed_df['speed'].std(),2),'km/h')
 
 
     else:
@@ -141,7 +167,10 @@ elif data_module == 'Traffic Data 🚦':
     st.subheader('Density Heatmap (Zoom in for better visualization)')
     m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
     data = traffic_data[['latitude', 'longitude']].values.tolist()
-    HeatMap(data).add_to(m)
+    heatmap_layer = HeatMap(data, name='Location Heatmap', min_opacity=0.2,
+                        blur=5, max_zoom=10, radius=10, gradient={0.2: 'blue', 0.4: 'lime', 0.6: 'yellow', 0.7: 'orange', 0.8: 'red', 1:'maroon'})
+
+    heatmap_layer.add_to(m)
     folium_static(m)
 
     # Trajectory analysis based on journeyid
@@ -159,7 +188,7 @@ elif data_module == 'Traffic Data 🚦':
     # if selected_journeyid != 'All':
     #     journey_df
 
-elif data_module == 'Health Data 🏥':
+elif data_module == 'Health Data':
     # Set default values for start_date and end_date
     default_start_date = pd.to_datetime('2021-01-01')
     default_end_date = pd.to_datetime('2021-06-30')
@@ -169,10 +198,10 @@ elif data_module == 'Health Data 🏥':
     end_date = st.sidebar.date_input('End date', default_end_date)
 
     # Filter the data based on the user's selection
-    covid_data['date'] = pd.to_datetime(covid_data['date'], format='%m/%d/%Y')
+    covid_data['date'] = pd.to_datetime(covid_data['date'])#, format='%m/%d/%Y')
     filtered_data = covid_data[(covid_data['date'] >= pd.Timestamp(start_date)) & (covid_data['date'] <= pd.Timestamp(end_date))]
 
-    grouped_data = filtered_data.groupby('zip code').sum()[['cumulative positive cases', 'cumulative recoveries', 'cumulative deaths']]
+    grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']]
 
     # Reset the index to make zip code a column
     grouped_data = grouped_data.reset_index()
@@ -185,35 +214,91 @@ elif data_module == 'Health Data 🏥':
     #filtered_zip_data = filtered_zip_data.set_index('date')
 
     # Create a line chart of the total positive cases, recoveries, and deaths over time
-    variable = st.sidebar.selectbox('Data Display', ['cumulative positive cases', 'cumulative recoveries', 'cumulative deaths'])
+    variable = st.sidebar.selectbox('Data Display', ['Total cases table','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
 
     # st.sidebar.subheader('Authors:')
     # st.sidebar.write('- Kelvin Cheu')
-    # st.sidebar.write('- Ruimin Ke')
+    # st.sidebar.write('- Ruimin Ke')s
     # st.sidebar.write('- Chengyue Wang')
     # st.sidebar.write('- Swapnil Samat')
     # st.sidebar.write('- Jeffrey Weidner') 
-    st.sidebar.image('utep-miners-logo.png', width=200)
 
-    chart = alt.Chart(filtered_zip_data).mark_line().encode(
-        x='date:T',
-        y=alt.Y(variable + ':Q', stack=True),
-        color='variable:N'
-    ).properties(
-        title=f'The {variable} over selected time range for zip code {zip_code}',
-        width=800,
-        height=400
-    )
 
+    # CTECH logo and UTEP logo are side-by-side
+    st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
+ 
+    if variable=='Total cases table':
+        st.markdown('### Total Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
+        st.write(grouped_data) 
+    elif variable=='Cumulative positive cases':
+        fig=plt.figure()
+        plt.style.use('dark_background')
+
+
+        plt.plot(filtered_zip_data['date'],filtered_zip_data['Cumulative positive cases'].values.tolist())
+        plt.title('Cumulative positive cases of area '+str(zip_code))
+        plt.xlabel('date')
+        plt.ylabel('Cumulative positive cases')
+   
+        #print(filtered_zip_data['date'].values.tolist())
+        st.pyplot(fig)
+    elif variable=='Cumulative recoveries':
+        fig=plt.figure()
+        plt.style.use('dark_background')
+
+
+        plt.plot(filtered_zip_data['date'],filtered_zip_data['Cumulative recoveries'].values.tolist())
+
+        plt.title('Cumulative recoveries of area '+str(zip_code))
+        plt.xlabel('date')
+        plt.ylabel('Cumulative recoveries')
+ 
+        #print(filtered_zip_data['date'].values.tolist())
+        st.pyplot(fig)
+    elif variable=='Cumulative deaths':
+        fig=plt.figure()
+        plt.style.use('dark_background')
+
+
+        plt.plot(filtered_zip_data['date'],filtered_zip_data['Cumulative deaths'].values.tolist())
+               
+        plt.title('Cumulative deaths of area '+str(zip_code))
+        plt.xlabel('date')
+        plt.ylabel('Cumulative deaths')
+       
+        
+        #print(filtered_zip_data['date'].values.tolist())
+
+        st.pyplot(fig)
+
+    
+        
+
+
+    #CTECH logo is below to UTEP logo
+    #st.sidebar.image('utep_new_logo.png', width=200)
+    #st.sidebar.image('CTECH.jpeg', width=200)
+
+    #chart = alt.Chart(filtered_zip_data).mark_line().encode(
+    #    x='date:T',
+    #    y=alt.Y(variable + ':Q', stack=True),
+    #    color=variable + ''
+        
+
+    #).properties(
+    #    title=f'The {variable} over selected time range for zip code {zip_code}',
+    #    width=800,
+    #    height=400
+    #)
     # Display the line chart in the Streamlit app using altair_chart
-    st.altair_chart(chart)
+    #st.altair_chart(chart)
 
     # Create a table of the total positive cases, recoveries, and deaths by zip code
-    st.markdown('### Total Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
+    #st.markdown('### Total Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
     #pd.set_option('display.max_colwidth', 100)
     # Set the width of each column to 150 pixels
     #styles = [dict(selector="th", props=[("max-width", "150px")])]
-    st.write(grouped_data) 
+    #st.write(grouped_data) 
 
 
     # # Set default values for start_date and end_date
