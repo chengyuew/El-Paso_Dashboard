@@ -198,7 +198,7 @@ elif data_module == 'Health Data':
     end_date = st.sidebar.date_input('End date', default_end_date)
 
     # Filter the data based on the user's selection
-    covid_data['date'] = pd.to_datetime(covid_data['date'])#, format='%m/%d/%Y')
+    covid_data['date'] = pd.to_datetime(covid_data['date'], format='%m/%d/%y')
     filtered_data = covid_data[(covid_data['date'] >= pd.Timestamp(start_date)) & (covid_data['date'] <= pd.Timestamp(end_date))]
 
     grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']]
@@ -214,7 +214,7 @@ elif data_module == 'Health Data':
     #filtered_zip_data = filtered_zip_data.set_index('date')
 
     # Create a line chart of the total positive cases, recoveries, and deaths over time
-    variable = st.sidebar.selectbox('Data Display', ['Total cases table','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
+    variable = st.sidebar.selectbox('Data Display', ['Total cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
 
     # st.sidebar.subheader('Authors:')
     # st.sidebar.write('- Kelvin Cheu')
@@ -230,47 +230,24 @@ elif data_module == 'Health Data':
     if variable=='Total cases table':
         st.markdown('### Total Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
         st.write(grouped_data) 
-    elif variable=='Cumulative positive cases':
-        fig=plt.figure()
-        plt.style.use('dark_background')
-
-
-        plt.plot(filtered_zip_data['date'],filtered_zip_data['Cumulative positive cases'].values.tolist())
-        plt.title('Cumulative positive cases of area '+str(zip_code))
-        plt.xlabel('date')
-        plt.ylabel('Cumulative positive cases')
-   
-        #print(filtered_zip_data['date'].values.tolist())
-        st.pyplot(fig)
-    elif variable=='Cumulative recoveries':
-        fig=plt.figure()
-        plt.style.use('dark_background')
-
-
-        plt.plot(filtered_zip_data['date'],filtered_zip_data['Cumulative recoveries'].values.tolist())
-
-        plt.title('Cumulative recoveries of area '+str(zip_code))
-        plt.xlabel('date')
-        plt.ylabel('Cumulative recoveries')
- 
-        #print(filtered_zip_data['date'].values.tolist())
-        st.pyplot(fig)
-    elif variable=='Cumulative deaths':
-        fig=plt.figure()
-        plt.style.use('dark_background')
-
-
-        plt.plot(filtered_zip_data['date'],filtered_zip_data['Cumulative deaths'].values.tolist())
-               
-        plt.title('Cumulative deaths of area '+str(zip_code))
-        plt.xlabel('date')
-        plt.ylabel('Cumulative deaths')
-       
+    elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
+        chart = alt.Chart(filtered_zip_data).mark_line().encode(
+        x='date:T',
+        y=alt.Y(variable + ':Q', stack=True)
+        #color=variable + ''
         
-        #print(filtered_zip_data['date'].values.tolist())
 
-        st.pyplot(fig)
-
+        ).properties(
+        title=f'               The {variable} over selected time range for zip code {zip_code}',
+        width=800,
+        height=400
+        )
+    # Display the line chart in the Streamlit app using altair_chart
+        st.altair_chart(chart)
+    elif variable=='Bar chart race':
+        video_file = open('bar_chart_race.mp4', 'rb')
+        video_bytes = video_file.read()
+        st.video(video_bytes)       
     
         
 
