@@ -4,6 +4,6 @@ pandas==1.4.4
 folium==0.14.0
 altair==4.2.0
 numpy==1.23.1
-random==21.2.1
+random==1.2.2
 datetime==5.1
 matplotlib==3.7.0
