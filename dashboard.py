@@ -35,7 +35,7 @@ with st.sidebar:
     selected = option_menu("Main Menu", ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'], 
         icons=['car', 'traffic light','hospital'], menu_icon="nn", default_index=0,
         styles={
-        "container": {"padding": "0!important", "background-color": "#0000ff"},
+        "container": {"padding": "0!important", "background-color": "#00008b"},
         "icon": {"color": "orange", "font-size": "25px"}, 
         "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
         "nav-link-selected": {"background-color": "green"},
@@ -112,6 +112,7 @@ if selected=='Crash Data 🚗':
     #st.sidebar.image('utep_new_logo.png', width=200)
     #st.sidebar.image('CTECH.jpeg', width=200)
     if map_type == 'Markers':
+        st.write('Each icon represents one crash')
         for index, row in filtered_data.iterrows():
             lat = row['Crash Latitude']
             lon = row['Crash Longitude']
@@ -124,7 +125,7 @@ if selected=='Crash Data 🚗':
         
     elif map_type == 'Heatmap':
         data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
-        st.write('The density of latitude and longitude points represents the frequency of crashes occurring around that point ')
+        st.write('Density of latitude and longitude points represents the frequency of crashes occurring around that point ')
         heatmap_layer = HeatMap(data, name='Crashes Location Heatmap', min_opacity=0.2,
                         blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
         heatmap_layer.add_to(m)
@@ -168,6 +169,7 @@ elif selected=='Traffic Data 🚦':
     traffic_data['postalcode'] = traffic_data['postalcode'].astype(int)
 
     zip_code = st.sidebar.selectbox('Select a zip code', sorted(traffic_data['postalcode'].unique()))
+    disply_type = st.sidebar.selectbox('Select a display type', ['Table','Density Heatmap','Trajectory Visualization'])
     # if zip_code == -1:
     #     zip_code = 'All'
     if zip_code != 0:
@@ -190,7 +192,7 @@ elif selected=='Traffic Data 🚦':
     st.write("Use this slider to filter the data of your interest by selecting a speed range (km/h)")
     speed_threshold = st.slider('Only', min_value=0, max_value=120, step=5, value=50,label_visibility="collapsed")
     speed_df = traffic_data[traffic_data['speed'] >= speed_threshold]
-    disply_type = st.sidebar.selectbox('Select a zip code', ['Table','Density Heatmap','Trajectory Visualization'])
+    #disply_type = st.sidebar.selectbox('Select a zip code', ['Table','Density Heatmap','Trajectory Visualization'])
     if disply_type == 'Table':
         if len(speed_df) > 0:
             st.write('Number of datapoints:', str(len(speed_df)))
@@ -299,7 +301,7 @@ elif selected=='Health Data 🏥':
     st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
  
     if variable=='Total COVID cases table':
-        st.write('### Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
+        st.write(' Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
         st.write(grouped_data) 
     elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
         chart = alt.Chart(filtered_zip_data).mark_line().encode(
