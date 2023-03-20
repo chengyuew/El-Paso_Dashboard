@@ -37,7 +37,7 @@ with st.sidebar:
         styles={
         "container": {"padding": "0!important", "background-color": "#00008b"},
         "icon": {"color": "orange", "font-size": "25px"}, 
-        "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},
+        "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#f7f7f7"},
         "nav-link-selected": {"background-color": "green"},
         }
         )
