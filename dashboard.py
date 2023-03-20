@@ -241,7 +241,8 @@ elif selected=='Traffic Data 🚦':
     elif disply_type=='Density Heatmap':
 
         # Density analysis
-        st.subheader('Density Heatmap (Zoom in for better visualization)')
+
+        st.markdown('#### Density Heatmap (Zoom in for better visualization)')
         st.write('Density of latitude and longitude points represents the frequency of vehicle trajectory passing through')
         m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
         data = traffic_data[['latitude', 'longitude']].values.tolist()
@@ -266,7 +267,7 @@ elif selected=='Traffic Data 🚦':
     elif disply_type=='Trajectory Visualization':
 
         # Trajectory analysis based on journeyid
-        st.subheader('Trajectory Visualization (Zoom in for better visualization)')
+        st.markdown('#### Trajectory Visualization (Zoom in for better visualization)')
         st.write('Each trip is represented by a color')
         st.write('O icon means the origin, D icon means destination')
         m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
