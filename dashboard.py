@@ -188,7 +188,7 @@ elif selected=='Traffic Data 🚦':
     #st.sidebar.image('utep_new_logo.png', width=200)
     #st.sidebar.image('CTECH.jpeg', width=200)
 
-    st.subheader('Speed-based Pattern Analysis')
+    #st.subheader('Speed-based Pattern Analysis')
     st.write("Use this slider to filter the data of your interest by selecting a speed range (km/h)")
     speed_threshold = st.slider('Only', min_value=0, max_value=120, step=5, value=50,label_visibility="collapsed")
     speed_df = traffic_data[traffic_data['speed'] >= speed_threshold]
