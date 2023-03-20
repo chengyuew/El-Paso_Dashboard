@@ -318,7 +318,7 @@ elif selected=='Health Data 🏥':
     # Display the line chart in the Streamlit app using altair_chart
         st.altair_chart(chart)
     elif variable=='Bar chart race':
-        st.write('Cumulative positive cases of each Zip code in El Paso')
+        st.write('The cumulative positive cases of each Zip code in El Paso')
         video_file = open('bar_chart_race.mp4', 'rb')
         video_bytes = video_file.read()
         st.video(video_bytes)       
