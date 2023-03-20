@@ -161,6 +161,7 @@ elif selected=='Traffic Data 🚦':
     traffic_data['postalcode'] = traffic_data['postalcode'].astype(int)
 
     zip_code = st.sidebar.selectbox('Select a zip code', sorted(traffic_data['postalcode'].unique()))
+    disply_type = st.sidebar.selectbox('Select a display type', ['Table','Density Heatmap','Trajectory Visualization'])
     # if zip_code == -1:
     #     zip_code = 'All'
     if zip_code != 0:
@@ -183,7 +184,7 @@ elif selected=='Traffic Data 🚦':
     st.write("Use this slider to filter the data of your interest by selecting a speed range (km/h)")
     speed_threshold = st.slider('Only', min_value=0, max_value=120, step=5, value=50,label_visibility="collapsed")
     speed_df = traffic_data[traffic_data['speed'] >= speed_threshold]
-    disply_type = st.sidebar.selectbox('Select a zip code', ['Table','Density Heatmap','Trajectory Visualization'])
+    
     if disply_type == 'Table':
         if len(speed_df) > 0:
             st.write('Number of datapoints:', str(len(speed_df)))
