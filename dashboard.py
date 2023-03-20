@@ -35,10 +35,10 @@ with st.sidebar:
     selected = option_menu("Main Menu", ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'], 
         icons=['car', 'traffic light','hospital'], menu_icon="nn", default_index=0,
         styles={
-        "container": {"padding": "0!important", "background-color": "#fcba03"},
+        "container": {"padding": "0!important", "background-color": "#FF5F1F"},
         "icon": {"color": "orange", "font-size": "25px"}, 
         "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#f7f7f7"},
-        "nav-link-selected": {"background-color": "green"},
+        "nav-link-selected": {"background-color": "#FF5F1F"},
         }
         )
 
