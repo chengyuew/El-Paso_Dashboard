@@ -241,8 +241,8 @@ elif selected=='Traffic Data 🚦':
             #print('points:',points)
             #print('################################################')
             #print('original:',original_points)
-            folium.Marker(location=points[0], tooltip='Start point', icon=folium.Icon(color=thecolor)).add_to(m2)
-            folium.Marker(location=points[-1], tooltip='End point', icon=folium.Icon(color=thecolor)).add_to(m2)
+            folium.Marker(location=points[0], tooltip='Start point', icon=folium.Icon(color=thecolor),icon_size=(0.001, 0.001)).add_to(m2)
+            folium.Marker(location=points[-1], tooltip='End point', icon=folium.Icon(color=thecolor),icon_size=(0.001, 0.001)).add_to(m2)
             folium.PolyLine(points, color=thecolor, weight=4, opacity=0.75).add_to(m2)
 
         folium_static(m2)
@@ -254,8 +254,8 @@ elif selected=='Traffic Data 🚦':
 #elif data_module == 'Health Data':
 elif selected=='Health Data 🏥':
     # Set default values for start_date and end_date
-    default_start_date = pd.to_datetime('2021-01-01')
-    default_end_date = pd.to_datetime('2021-06-30')
+    default_start_date = pd.to_datetime('2021-09-01')
+    default_end_date = pd.to_datetime('2022-03-31')
 
     # Add a slider to allow the user to select a time frame
     start_date = st.sidebar.date_input('Start date', default_start_date)
