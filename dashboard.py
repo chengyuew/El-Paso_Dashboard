@@ -8,6 +8,9 @@ from streamlit_folium import folium_static
 from folium.plugins import HeatMap
 import random
 import matplotlib.pyplot as plt
+from streamlit_option_menu import option_menu
+import branca.colormap as cm
+
 
 # Load the data
 crash_data = pd.read_csv('crash_data.csv')
@@ -27,8 +30,14 @@ st.subheader('Transportation, Environment and Community Health')
 #st.title('El Paso Data Dashboard \n Transportation, Environment and Community Health')
 
 # Add a dropdown to allow the user to select a data module
-data_module = st.sidebar.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'])
+#data_module = st.sidebar.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'])
+with st.sidebar:
+    selected = option_menu("Main Menu", ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'], 
+        icons=['car', 'traffic light','hospital'], menu_icon="nn", default_index=0)
 
+    #selected
+
+#tab1, tab2, tab3 = st.tabs(['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'])
 # Add a radio button group to allow the user to select a data module
 #data_module = st.radio('Select a data module', ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'])
 
@@ -44,7 +53,8 @@ data_module = st.sidebar.selectbox('Select a data module', ['Crash Data', 'Traff
 # # Add a selectbox to allow the user to select a data module
 # data_module = st.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'], format_func=lambda x: icons[x]+' '+x)
 
-if data_module == 'Crash Data':
+#if data_module == 'Crash Data':
+if selected=='Crash Data 🚗':
     # Set default values for start_date and end_date
     default_start_date = pd.to_datetime('2020-01-01')
     default_end_date = pd.to_datetime('2020-03-01')
@@ -74,6 +84,7 @@ if data_module == 'Crash Data':
     # Create a map using Folium
     m = folium.Map(location=[31.7619, -106.4850], zoom_start=11)
 
+
     # Add markers to the map for each crash in the filtered data
     #for index, row in filtered_data.iterrows():
     #    lat = row['Crash Latitude']
@@ -98,18 +109,36 @@ if data_module == 'Crash Data':
             lat = row['Crash Latitude']
             lon = row['Crash Longitude']
             marker = folium.Marker([lat, lon])
+            
             marker.add_to(m)
+
+
+        
+        
     elif map_type == 'Heatmap':
         data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
+        st.write('Density of latitude and longitude points represents the frequency of crashes occurring around that point ')
         heatmap_layer = HeatMap(data, name='Crashes Location Heatmap', min_opacity=0.2,
-                        blur=5, max_zoom=10, radius=10, gradient={0.2: 'blue', 0.4: 'lime', 0.6: 'yellow', 0.7: 'orange', 0.8: 'red', 1:'maroon'})
+                        blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
         heatmap_layer.add_to(m)
+        ###########################################################################
+
+
+
+        step = cm.StepColormap(['green','blue','yellow','red','maroon'],
+                            vmin=0, vmax=1, index=[0,0.2,0.4,0.6,0.8,1],
+                            caption='Density')
+        #folium.map.LayerControl('topleft', collapsed= False).add_to(m)
+
+        step.add_to(m)
+###############################################################################################################
 
 
         #folium_static(m)
         #folium.plugins.heatmap_layer.add_to(m)
     else:
         from folium.plugins import MarkerCluster
+        st.write('The number in the circle is the number of crashes happened in that area')
         marker_cluster = MarkerCluster()
         for index, row in filtered_data.iterrows():
             lat = row['Crash Latitude']
@@ -117,11 +146,13 @@ if data_module == 'Crash Data':
             marker = folium.Marker([lat, lon])
             marker_cluster.add_child(marker)
         marker_cluster.add_to(m)
+   
 
     # Display the map in the Streamlit app
     folium_static(m)
 
-elif data_module == 'Traffic Data':
+#elif data_module == 'Traffic Data':
+elif selected=='Traffic Data 🚦':
     # Filter the data by date and time
     #date = st.date_input('Select a date', min_value=traffic_data['capturedtimestamp'].min().date(), max_value=traffic_data['capturedtimestamp'].max().date())
     #time = st.time_input('Select a time')
@@ -149,46 +180,78 @@ elif data_module == 'Traffic Data':
     #st.sidebar.image('CTECH.jpeg', width=200)
 
     st.subheader('Speed-based Pattern Analysis')
-    speed_threshold = st.slider('Select a speed threshold (km/h)', min_value=0, max_value=120, step=5, value=50)
+    st.write("Use this slider to filter the data of your interest by selecting a speed range (km/h)")
+    speed_threshold = st.slider('Only', min_value=0, max_value=120, step=5, value=50,label_visibility="collapsed")
     speed_df = traffic_data[traffic_data['speed'] >= speed_threshold]
-    if len(speed_df) > 0:
-        st.write('Number of datapoints:', len(speed_df))
-        st.write(speed_df)
-        st.write('Average speed:', round(speed_df['speed'].mean(),2),'km/h')#round(answer, 2)
-        st.write('Max speed:', speed_df['speed'].max(),'km/h')
-        st.write('Min speed:', speed_df['speed'].min(),'km/h')
-        st.write('Standard deviation:', round(speed_df['speed'].std(),2),'km/h')
+    disply_type = st.sidebar.selectbox('Select a zip code', ['Table','Density Heatmap','Trajectory Visualization'])
+    if disply_type == 'Table':
+        if len(speed_df) > 0:
+            st.write('Number of datapoints:', str(len(speed_df)))
+            st.write(speed_df)
+            st.write('Average speed:', str(round(speed_df['speed'].mean(),2)),'km/h')#round(answer, 2)
+            st.write('Max speed:', str(speed_df['speed'].max()),'km/h')
+            st.write('Min speed:', str(speed_df['speed'].min()),'km/h')
+            st.write('Standard deviation:', str(round(speed_df['speed'].std(),2)),'km/h')
 
 
-    else:
-        st.write('No datapoints above the speed threshold')
+        else:
+            st.write('No datapoints above the speed threshold')
+    
+    
+    elif disply_type=='Density Heatmap':
 
-    # Density analysis
-    st.subheader('Density Heatmap (Zoom in for better visualization)')
-    m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
-    data = traffic_data[['latitude', 'longitude']].values.tolist()
-    heatmap_layer = HeatMap(data, name='Location Heatmap', min_opacity=0.2,
-                        blur=5, max_zoom=10, radius=10, gradient={0.2: 'blue', 0.4: 'lime', 0.6: 'yellow', 0.7: 'orange', 0.8: 'red', 1:'maroon'})
+        # Density analysis
+        st.subheader('Density Heatmap (Zoom in for better visualization)')
+        st.write('Density of latitude and longitude points represents the frequency of vehicle trajectory passing through')
+        m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
+        data = traffic_data[['latitude', 'longitude']].values.tolist()
+        heatmap_layer = HeatMap(data, name='Crashes Location Heatmap', min_opacity=0.2,
+                            blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
+        heatmap_layer.add_to(m)
+            ###########################################################################
 
-    heatmap_layer.add_to(m)
-    folium_static(m)
 
-    # Trajectory analysis based on journeyid
-    st.subheader('Trajectory Visualization')
-    m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
-    colors = ['blue','red','green','purple','black','gray','yellow']
-    grouped = traffic_data.groupby(by='journeyid')
-    for name, group in grouped:
-        original_points = [group['latitude'].tolist(), group['longitude'].tolist()]
-        points = [list(row) for row in zip(*original_points)]
-        folium.PolyLine(points, color=colors[random.randrange(0,len(colors))], weight=4, opacity=0.75).add_to(m2)
-    folium_static(m2)
+
+        step = cm.StepColormap(['green','blue','yellow','red','maroon'],
+                            vmin=0, vmax=1, index=[0,0.2,0.4,0.6,0.8,1],
+                            caption='Density')
+        
+
+        step.add_to(m)
+        
+    ###############################################################################################################
+
+        
+        folium_static(m)
+    elif disply_type=='Trajectory Visualization':
+
+        # Trajectory analysis based on journeyid
+        st.subheader('Trajectory Visualization (Zoom in for better visualization)')
+        st.write('Each trip is represented by a color')
+        m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
+        colors=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue']
+        #colors = ['blue','red','green','purple','black','gray','yellow']
+        grouped = traffic_data.groupby(by='journeyid')
+        for name, group in grouped:
+            original_points = [group['latitude'].tolist(), group['longitude'].tolist()]
+            
+            points = [list(row) for row in zip(*original_points)]
+            thecolor=colors[random.randrange(0,len(colors)-1)]
+            #print('points:',points)
+            #print('################################################')
+            #print('original:',original_points)
+            folium.Marker(location=points[0], tooltip='Start point', icon=folium.Icon(color=thecolor)).add_to(m2)
+            folium.Marker(location=points[-1], tooltip='End point', icon=folium.Icon(color=thecolor)).add_to(m2)
+            folium.PolyLine(points, color=thecolor, weight=4, opacity=0.75).add_to(m2)
+
+        folium_static(m2)
     # journeyids = traffic_data['journeyid'].unique()
     # selected_journeyid = st.selectbox('Select a journeyid', ['All'] + list(journeyids))
     # if selected_journeyid != 'All':
     #     journey_df
 
-elif data_module == 'Health Data':
+#elif data_module == 'Health Data':
+elif selected=='Health Data 🏥':
     # Set default values for start_date and end_date
     default_start_date = pd.to_datetime('2021-01-01')
     default_end_date = pd.to_datetime('2021-06-30')
@@ -214,7 +277,7 @@ elif data_module == 'Health Data':
     #filtered_zip_data = filtered_zip_data.set_index('date')
 
     # Create a line chart of the total positive cases, recoveries, and deaths over time
-    variable = st.sidebar.selectbox('Data Display', ['Total cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
+    variable = st.sidebar.selectbox('Data Display', ['Total COVID cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
 
     # st.sidebar.subheader('Authors:')
     # st.sidebar.write('- Kelvin Cheu')
@@ -227,7 +290,7 @@ elif data_module == 'Health Data':
     # CTECH logo and UTEP logo are side-by-side
     st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
  
-    if variable=='Total cases table':
+    if variable=='Total COVID cases table':
         st.markdown('### Total Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
         st.write(grouped_data) 
     elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
@@ -245,10 +308,11 @@ elif data_module == 'Health Data':
     # Display the line chart in the Streamlit app using altair_chart
         st.altair_chart(chart)
     elif variable=='Bar chart race':
+        st.subheader('Cumulative positive cases of each Zip code in El Paso')
         video_file = open('bar_chart_race.mp4', 'rb')
         video_bytes = video_file.read()
         st.video(video_bytes)       
-    
+
         
 
 
