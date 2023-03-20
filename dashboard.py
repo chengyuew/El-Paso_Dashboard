@@ -113,12 +113,28 @@ if selected=='Crash Data 🚗':
     #st.sidebar.image('CTECH.jpeg', width=200)
     if map_type == 'Markers':
         st.write('Each icon represents one crash')
+        st.write('Green N icon represents the crash severity is NOT INJURED')
+        st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
+        st.write('Red F icon represents the crash severity is FATAL INJURY')
+        st.write('Pink U icon represents the crash severity is UNKNOWN')
         for index, row in filtered_data.iterrows():
             lat = row['Crash Latitude']
             lon = row['Crash Longitude']
-            marker = folium.Marker([lat, lon])
+            ser= row['Crash Severity']
+            if ser=='NOT INJURED':
+                folium.Marker(location=[lat, lon], tooltip='NOT INJURED', icon=folium.Icon(color='green',icon="n",prefix='fa')).add_to(m)
+            elif ser=='FATAL INJURY':
+                folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="f",prefix='fa')).add_to(m)
+            elif ser=='UNKNOWN':
+                folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='pink',icon="u",prefix='fa')).add_to(m)
+            else: 
+                folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa')).add_to(m)
+
+
             
-            marker.add_to(m)
+           # marker = folium.Marker([lat, lon])
+            
+            #marker.add_to(m)
 
 
         
@@ -147,11 +163,26 @@ if selected=='Crash Data 🚗':
     else:
         from folium.plugins import MarkerCluster
         st.write('The number in the circle is the number of crashes happened in that area')
+        st.write('Zoom in for better visualization')
+        st.write('Each icon represents one crash')
+        st.write('Green N icon represents the crash severity is NOT INJURED')
+        st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
+        st.write('Red F icon represents the crash severity is FATAL INJURY')
+        st.write('Pink U icon represents the crash severity is UNKNOWN')
         marker_cluster = MarkerCluster()
         for index, row in filtered_data.iterrows():
             lat = row['Crash Latitude']
             lon = row['Crash Longitude']
-            marker = folium.Marker([lat, lon])
+            ser= row['Crash Severity']
+            if ser=='NOT INJURED':
+                marker=folium.Marker(location=[lat, lon], tooltip='NOT INJURED', icon=folium.Icon(color='green',icon="n",prefix='fa'))
+            elif ser=='FATAL INJURY':
+                marker=folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="f",prefix='fa'))
+            elif ser=='UNKNOWN':
+                marker=folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='pink',icon="u",prefix='fa'))
+            else: 
+                marker=folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa'))
+
             marker_cluster.add_child(marker)
         marker_cluster.add_to(m)
    
@@ -237,7 +268,7 @@ elif selected=='Traffic Data 🚦':
         # Trajectory analysis based on journeyid
         st.subheader('Trajectory Visualization (Zoom in for better visualization)')
         st.write('Each trip is represented by a color')
-        st.write('i icon means the origin, cloud icon means destination')
+        st.write('O icon means the origin, D icon means destination')
         m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
         colors=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue']
         #colors = ['blue','red','green','purple','black','gray','yellow']
@@ -250,8 +281,8 @@ elif selected=='Traffic Data 🚦':
             #print('points:',points)
             #print('################################################')
             #print('original:',original_points)
-            folium.Marker(location=points[0], tooltip='Origin', icon=folium.Icon(color=thecolor)).add_to(m2)
-            folium.Marker(location=points[-1], tooltip='Destination', icon=folium.Icon(color=thecolor,icon="cloud")).add_to(m2)
+            folium.Marker(location=points[0], tooltip='Origin', icon=folium.Icon(color=thecolor,icon="o",prefix='fa')).add_to(m2)
+            folium.Marker(location=points[-1], tooltip='Destination', icon=folium.Icon(color=thecolor,icon="d",prefix='fa')).add_to(m2)
             folium.PolyLine(points, color=thecolor, weight=4, opacity=0.75).add_to(m2)
 
         folium_static(m2)
