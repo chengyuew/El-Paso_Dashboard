@@ -35,10 +35,10 @@ with st.sidebar:
     selected = option_menu("Main Menu", ['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥'], 
         icons=['car', 'traffic light','hospital'], menu_icon="nn", default_index=0,
         styles={
-        "container": {"padding": "0!important", "background-color": "#FF5F1F"},
+        "container": {"padding": "0!important", "background-color": "#a6e7ed"},
         "icon": {"color": "orange", "font-size": "25px"}, 
         "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#f7f7f7"},
-        "nav-link-selected": {"background-color": "#FF5F1F"},
+        "nav-link-selected": {"background-color": "#a6e7ed"},
         }
         )
 
@@ -163,12 +163,8 @@ if selected=='Crash Data 🚗':
     else:
         from folium.plugins import MarkerCluster
         st.write('The number in the circle is the number of crashes happened in that area')
-        st.write('Zoom in for better visualization')
-        st.write('Each icon represents one crash')
-        st.write('Green N icon represents the crash severity is NOT INJURED')
-        st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
-        st.write('Red F icon represents the crash severity is FATAL INJURY')
-        st.write('Pink U icon represents the crash severity is UNKNOWN')
+ 
+
         marker_cluster = MarkerCluster()
         for index, row in filtered_data.iterrows():
             lat = row['Crash Latitude']
@@ -242,7 +238,7 @@ elif selected=='Traffic Data 🚦':
 
         # Density analysis
 
-        st.markdown('#### Density Heatmap (Zoom in for better visualization)')
+        st.markdown('#### Density Heatmap ')
         st.write('Density of latitude and longitude points represents the frequency of vehicle trajectory passing through')
         m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
         data = traffic_data[['latitude', 'longitude']].values.tolist()
@@ -267,7 +263,7 @@ elif selected=='Traffic Data 🚦':
     elif disply_type=='Trajectory Visualization':
 
         # Trajectory analysis based on journeyid
-        st.markdown('#### Trajectory Visualization (Zoom in for better visualization)')
+        st.markdown('#### Trajectory Visualization')
         st.write('Each trip is represented by a color')
         st.write('O icon means the origin, D icon means destination')
         m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
@@ -295,8 +291,8 @@ elif selected=='Traffic Data 🚦':
 #elif data_module == 'Health Data':
 elif selected=='Health Data 🏥':
     # Set default values for start_date and end_date
-    default_start_date = pd.to_datetime('2021-01-01')
-    default_end_date = pd.to_datetime('2021-06-30')
+    default_start_date = pd.to_datetime('2021-09-01')
+    default_end_date = pd.to_datetime('2022-03-31')
 
     # Add a slider to allow the user to select a time frame
     start_date = st.sidebar.date_input('Start date', default_start_date)
@@ -341,13 +337,19 @@ elif selected=='Health Data 🏥':
         y=alt.Y(variable + ':Q', stack=True)
         #color=variable + ''
         
-
+#"<span style='font-size:15px;'>date</span>"
         ).properties(
         title=f'               The {variable} over selected time range for zip code {zip_code}',
         width=800,
         height=400
         )
     # Display the line chart in the Streamlit app using altair_chart
+      
+        
+        chart=chart.configure_axis(labelFontSize=13)
+        
+        
+
         st.altair_chart(chart)
     elif variable=='Bar chart race':
         st.write('The cumulative positive cases of each Zip code in El Paso')
