@@ -168,24 +168,19 @@ def dashboard():
                 else: 
                     folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa')).add_to(m)
                         ################################################3
-            lgd_txt = '<span style="color: {col};">{txt}</span>'
-            fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
-            fg2 = folium.FeatureGroup(name= lgd_txt.format( txt= 'I icon is Injuryed Carsh', col='blue'))
-            fg3 = folium.FeatureGroup(name= lgd_txt.format( txt= 'F icon is Fatal Carsh', col='red'))
-            fg4 = folium.FeatureGroup(name= lgd_txt.format( txt= 'U icon is Unkown Carsh', col='black'))
-            m.add_child( fg1)
-            m.add_child( fg2)
-            m.add_child( fg3)
-            m.add_child( fg4)
-
+            #lgd_txt = '<span style="color: {col};">{txt}</span>'
+            #fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
             
-  
+ #           m.add_child( fg1)
+ 
+
+
 
 
 
 
             ############################################3
-            folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
+            #folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
 
 
                 
@@ -244,25 +239,7 @@ def dashboard():
                 marker_cluster.add_child(marker)
             
             marker_cluster.add_to(m)
-            ################################################3
-            lgd_txt = '<span style="color: {col};">{txt}</span>'
-            fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
-            fg2 = folium.FeatureGroup(name= lgd_txt.format( txt= 'I icon is Injuryed Carsh', col='blue'))
-            fg3 = folium.FeatureGroup(name= lgd_txt.format( txt= 'F icon is Fatal Carsh', col='red'))
-            fg4 = folium.FeatureGroup(name= lgd_txt.format( txt= 'U icon is Unkown Carsh', col='black'))
-            m.add_child( fg1)
-            m.add_child( fg2)
-            m.add_child( fg3)
-            m.add_child( fg4)
 
-            
-  
-
-
-
-
-            ############################################3
-            folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
     
 
         # Display the map in the Streamlit app
@@ -366,22 +343,7 @@ def dashboard():
                 folium.Marker(location=points[-1], tooltip='Destination', icon=folium.Icon(color=thecolor,icon="d",prefix='fa')).add_to(m2)
                 folium.PolyLine(points, color=thecolor, weight=4, opacity=0.75).add_to(m2)
                                    ################################################3
-            lgd_txt = '<span style="color: {col};">{txt}</span>'
-            fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'O icon means the origin', col='green'))
-            fg2 = folium.FeatureGroup(name= lgd_txt.format( txt= 'D icon means destination', col='blue'))
-
-            m2.add_child( fg1)
-            m2.add_child( fg2)
-
-
-            
-  
-
-
-
-
-            ############################################3
-            folium.map.LayerControl('bottomleft', collapsed= False).add_to(m2)
+     
 
             folium_static(m2)
         # journeyids = traffic_data['journeyid'].unique()
