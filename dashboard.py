@@ -16,32 +16,113 @@ import branca.colormap as cm
 
 
 
+
+
+
+
+
 def welcome():
-    #st.markdown('#### Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.')
-    #st.markdown('#### The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. Using the El Paso region as an example, the research team will engage the stakeholders to demonstrate how the different data in the prototype dashboard may be intersected to analyze the relationships between transportation, environment, and community health.')
-    #st.markdown('#### This prototype data dashboard is a deliverable for this project.') 
-    #st.markdown("<div style='text-align: justify'> #### Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
-    #st.markdown("<div style='text-align: justify; font-size: 24px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
-    st.markdown("<div style='text-align: justify; font-size: 24px'><b>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</b></div>", unsafe_allow_html=True)
-    st.write('')
-    st.markdown("<div style='text-align: justify; font-size: 24px'><b>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. Using the El Paso region as an example, the research team will engage the stakeholders to demonstrate how the different data in the prototype dashboard may be intersected to analyze the relationships between transportation, environment, and community health.</b></div>", unsafe_allow_html=True)
-    st.write('')
-    st.markdown("<div style='text-align: justify; font-size: 24px'><b>This prototype data dashboard is a deliverable for this project.</b></div>", unsafe_allow_html=True)
-    st.markdown(
-    """
-    <style>
-    .stButton button {
-        width: 200px;
-        height: 50px;
-        font-size: 40px;
-        font-weight: bold;
-        float: right;
+    selected3 = option_menu(None, ["HOMEPAGE", "ABOUT DASHBOARD","CONTACT US"], 
+    icons=['house', 'cloud-upload', "list-task"], 
+    menu_icon="cast", default_index=0, orientation="horizontal",
+    styles={
+    "container": {"padding": "0!important", "background-color": "#a6e7ed"},
+    "icon": {"color": "#a6e7ed", "font-size": "25px"}, 
+    "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#f7f7f7"},
+    "nav-link-selected": {"background-color": "#a6e7ed"},
     }
-    </style>
-    """,
-    unsafe_allow_html=True,
     )
-    if st.button("Enter"):
+
+    #tab1, tab2 ,tab3= st.tabs(["HOMEPAGE", "ABOUT DASHBOARD","CONTACT US"])
+    #font_css = """
+    #<style>
+    #button[data-baseweb="tab"] > div[data-testid="stMarkdownContainer"] > p {
+    #font-size: 30px;
+    #}
+    #</style>
+    #"""
+
+    #st.write(font_css, unsafe_allow_html=True)
+
+
+    if selected3=='HOMEPAGE':
+
+
+        st.image('homepage.png',width=1800)
+
+        #st.markdown("<div style='text-align: center; font-size: 60px'><b>El Paso Data Dashboard</b></div>", unsafe_allow_html=True)
+
+    elif selected3=="ABOUT DASHBOARD":
+        st.image('1.jpg',width=1800)
+        
+
+        st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
+        st.write('')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. Using the El Paso region as an example, the research team will engage the stakeholders to demonstrate how the different data in the prototype dashboard may be intersected to analyze the relationships between transportation, environment, and community health.</div>", unsafe_allow_html=True)
+        st.write('')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>This prototype data dashboard is a deliverable for this project.</div>", unsafe_allow_html=True)
+    elif selected3=="CONTACT US":
+        st.image('1.jpg',width=1800)
+        col1, col2,col3= st.columns(3)
+        with col1:
+            st.image('rcheu.png')
+        with col2:
+            st.markdown("<div style='text-align: justify; font-size: 24px'><b>Ruey L. Cheu<b></div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Professor</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Department of Civil Engineering</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>University of Texas at El Paso (UTEP)</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Office: Engineering Building A208</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Phone: (915) 747-5717</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Email: rcheu@utep.edu</div>", unsafe_allow_html=True)
+        with col3:
+   
+            st.image(['utep_new_logo.png'], use_column_width=True)
+            #st.image(['CTECH.jpeg'], use_column_width=True)
+        col4, col5,col6= st.columns(3)
+        with col4:
+            st.image('rke.png')
+        with col5:
+            st.markdown("<div style='text-align: justify; font-size: 24px'><b>Ruimin Ke<b></div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Assistant Professor</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Department of Civil Engineering</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>University of Texas at El Paso (UTEP)</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Office: Engineering Building A221</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Phone: (915) 747-8301</div>", unsafe_allow_html=True)
+            st.write('')
+            st.markdown("<div style='text-align: justify; font-size: 20px'>Email: rke@utep.edu</div>", unsafe_allow_html=True)
+        with col6:
+   
+            
+            st.image(['CTECH.jpeg'], use_column_width=True)
+
+    st.markdown(
+        """
+        <style>
+        .stButton button {
+            width: 250px;
+            height: 100px;
+            font-size: 80px;
+            font-weight: bold;
+            float: right;
+            
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+        )
+
+    if st.button("El Paso Data Dashboard"):
         # Set the session state to True to indicate that the user has entered the dashboard
         st.session_state['dashboard_entered'] = True   
 
@@ -471,7 +552,7 @@ def dashboard():
         # if zip_code != 'ALL':
         #     filtered_data = filtered_data[filtered_data['zip code'] == zip_code]
 #st.set_page_config(page_title='El Paso Data Dashboard',layout='wide')
-st.set_page_config(page_title='El Paso Data Dashboard', layout='centered',page_icon=':bar_chart:')  
+st.set_page_config(page_title='El Paso Data Dashboard', layout='wide',page_icon=':bar_chart:')  
 
 if 'dashboard_entered' not in st.session_state:
     st.session_state['dashboard_entered'] = False
