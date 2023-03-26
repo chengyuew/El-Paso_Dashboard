@@ -222,7 +222,7 @@ def dashboard():
             st.write('The number in the circle is the number of crashes happened in that area')
     
 
-            marker_cluster = MarkerCluster()
+            marker_cluster = MarkerCluster(name='Marker Cluster')
 
 
 
