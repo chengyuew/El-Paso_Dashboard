@@ -23,7 +23,7 @@ import branca.colormap as cm
 
 def welcome():
     selected3 = option_menu(None, ["HOMEPAGE", "ABOUT DASHBOARD","CONTACT US"], 
-    icons=['house', 'cloud-upload', "list-task"], 
+    #icons=['house', 'cloud-upload', "list-task"], 
     menu_icon="cast", default_index=0, orientation="horizontal",
     styles={
     "container": {"padding": "0!important", "background-color": "#a6e7ed"},
@@ -58,9 +58,11 @@ def welcome():
 
         st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
         st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. Using the El Paso region as an example, the research team will engage the stakeholders to demonstrate how the different data in the prototype dashboard may be intersected to analyze the relationships between transportation, environment, and community health.</div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: justify; font-size: 20px'> The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
         st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>This prototype data dashboard is a deliverable for this project.</div>", unsafe_allow_html=True)
+        st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should be used to make conclusion or policy decision.</div>", unsafe_allow_html=True)
+        st.write('')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True)
     elif selected3=="CONTACT US":
         st.image('1.jpg',width=1800)
         col1, col2,col3= st.columns(3)
@@ -274,7 +276,7 @@ def dashboard():
             
         elif map_type == 'Heat Map':
             data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
-            st.write('Different color represent different likelihood of a crash happen in that area')
+            st.write('The color represent the likelihood of a crash happen in that area')
             heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
                             blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
             heatmap_layer.add_to(m)
@@ -381,7 +383,7 @@ def dashboard():
             # Density analysis
 
             st.markdown('#### Density Heat Map ')
-            st.write('Different color represent different traffic volume in the area')
+            st.write('The color represent the traffic volume in the area')
             m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
             data = traffic_data[['latitude', 'longitude']].values.tolist()
             heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
