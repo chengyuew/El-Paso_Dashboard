@@ -178,7 +178,7 @@ def dashboard():
             
         elif map_type == 'Heat Map':
             data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
-            st.write('Density of latitude and longitude points represents the frequency of crashes occurring around that point ')
+            st.write('Different color represent different likelihood of a crash in that area')
             heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
                             blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
             heatmap_layer.add_to(m)
@@ -278,7 +278,7 @@ def dashboard():
             # Density analysis
 
             st.markdown('#### Density Heat Map ')
-            st.write('Density of latitude and longitude points represents the frequency of vehicle trajectory passing through')
+            st.write('Different color represent different traffic volume in the area')
             m = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
             data = traffic_data[['latitude', 'longitude']].values.tolist()
             heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
