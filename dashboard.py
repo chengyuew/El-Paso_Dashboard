@@ -15,6 +15,7 @@ import branca.colormap as cm
 
 
 
+
 def welcome():
     #st.markdown('#### Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.')
     #st.markdown('#### The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. Using the El Paso region as an example, the research team will engage the stakeholders to demonstrate how the different data in the prototype dashboard may be intersected to analyze the relationships between transportation, environment, and community health.')
@@ -150,10 +151,10 @@ def dashboard():
         if map_type == 'Markers':
             st.write('Each icon represents one crash')
 
-            st.write('Green N icon represents the crash severity is NOT INJURED')
-            st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
-            st.write('Red F icon represents the crash severity is FATAL INJURY')
-            st.write('Pink U icon represents the crash severity is UNKNOWN')
+            #st.write('Green N icon represents the crash severity is NOT INJURED')
+            #st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
+            #st.write('Red F icon represents the crash severity is FATAL INJURY')
+            #st.write('Pink U icon represents the crash severity is UNKNOWN')
             for index, row in filtered_data.iterrows():
                 lat = row['Crash Latitude']
                 lon = row['Crash Longitude']
@@ -163,9 +164,28 @@ def dashboard():
                 elif ser=='FATAL INJURY':
                     folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="f",prefix='fa')).add_to(m)
                 elif ser=='UNKNOWN':
-                    folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='pink',icon="u",prefix='fa')).add_to(m)
+                    folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='black',icon="u",prefix='fa')).add_to(m)
                 else: 
                     folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa')).add_to(m)
+                        ################################################3
+            lgd_txt = '<span style="color: {col};">{txt}</span>'
+            fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
+            fg2 = folium.FeatureGroup(name= lgd_txt.format( txt= 'I icon is Injuryed Carsh', col='blue'))
+            fg3 = folium.FeatureGroup(name= lgd_txt.format( txt= 'F icon is Fatal Carsh', col='red'))
+            fg4 = folium.FeatureGroup(name= lgd_txt.format( txt= 'U icon is Unkown Carsh', col='black'))
+            m.add_child( fg1)
+            m.add_child( fg2)
+            m.add_child( fg3)
+            m.add_child( fg4)
+
+            
+  
+
+
+
+
+            ############################################3
+            folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
 
 
                 
@@ -178,7 +198,7 @@ def dashboard():
             
         elif map_type == 'Heat Map':
             data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
-            st.write('Different color represent different likelihood of a crash in that area')
+            st.write('Different color represent different likelihood of a crash happen in that area')
             heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
                             blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
             heatmap_layer.add_to(m)
@@ -203,6 +223,11 @@ def dashboard():
     
 
             marker_cluster = MarkerCluster()
+
+
+
+
+
             for index, row in filtered_data.iterrows():
                 lat = row['Crash Latitude']
                 lon = row['Crash Longitude']
@@ -212,12 +237,32 @@ def dashboard():
                 elif ser=='FATAL INJURY':
                     marker=folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="f",prefix='fa'))
                 elif ser=='UNKNOWN':
-                    marker=folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='pink',icon="u",prefix='fa'))
+                    marker=folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='black',icon="u",prefix='fa'))
                 else: 
                     marker=folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa'))
 
                 marker_cluster.add_child(marker)
+            
             marker_cluster.add_to(m)
+            ################################################3
+            lgd_txt = '<span style="color: {col};">{txt}</span>'
+            fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
+            fg2 = folium.FeatureGroup(name= lgd_txt.format( txt= 'I icon is Injuryed Carsh', col='blue'))
+            fg3 = folium.FeatureGroup(name= lgd_txt.format( txt= 'F icon is Fatal Carsh', col='red'))
+            fg4 = folium.FeatureGroup(name= lgd_txt.format( txt= 'U icon is Unkown Carsh', col='black'))
+            m.add_child( fg1)
+            m.add_child( fg2)
+            m.add_child( fg3)
+            m.add_child( fg4)
+
+            
+  
+
+
+
+
+            ############################################3
+            folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
     
 
         # Display the map in the Streamlit app
@@ -304,7 +349,7 @@ def dashboard():
             # Trajectory analysis based on journeyid
             st.markdown('#### Trajectory Visualization')
             st.write('Each trip is represented by a color')
-            st.write('O icon means the origin, D icon means destination')
+            #st.write('O icon means the origin, D icon means destination')
             m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
             colors=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue']
             #colors = ['blue','red','green','purple','black','gray','yellow']
@@ -320,6 +365,23 @@ def dashboard():
                 folium.Marker(location=points[0], tooltip='Origin', icon=folium.Icon(color=thecolor,icon="o",prefix='fa')).add_to(m2)
                 folium.Marker(location=points[-1], tooltip='Destination', icon=folium.Icon(color=thecolor,icon="d",prefix='fa')).add_to(m2)
                 folium.PolyLine(points, color=thecolor, weight=4, opacity=0.75).add_to(m2)
+                                   ################################################3
+            lgd_txt = '<span style="color: {col};">{txt}</span>'
+            fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'O icon means the origin', col='green'))
+            fg2 = folium.FeatureGroup(name= lgd_txt.format( txt= 'D icon means destination', col='blue'))
+
+            m2.add_child( fg1)
+            m2.add_child( fg2)
+
+
+            
+  
+
+
+
+
+            ############################################3
+            folium.map.LayerControl('bottomleft', collapsed= False).add_to(m2)
 
             folium_static(m2)
         # journeyids = traffic_data['journeyid'].unique()
