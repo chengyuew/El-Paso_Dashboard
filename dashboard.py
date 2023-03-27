@@ -10,6 +10,7 @@ import random
 import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
 import branca.colormap as cm
+import bar_chart_race as bcr
 
 
 
@@ -22,91 +23,18 @@ import branca.colormap as cm
 
 
 def welcome():
-    selected3 = option_menu(None, ["HOMEPAGE", "ABOUT DASHBOARD","CONTACT US"], 
-    #icons=['house', 'cloud-upload', "list-task"], 
-    menu_icon="cast", default_index=0, orientation="horizontal",
-    styles={
-    "container": {"padding": "0!important", "background-color": "#a6e7ed"},
-    "icon": {"color": "#a6e7ed", "font-size": "25px"}, 
-    "nav-link": {"font-size": "25px", "text-align": "left", "margin":"0px", "--hover-color": "#f7f7f7"},
-    "nav-link-selected": {"background-color": "#a6e7ed"},
-    }
-    )
-
-    #tab1, tab2 ,tab3= st.tabs(["HOMEPAGE", "ABOUT DASHBOARD","CONTACT US"])
-    #font_css = """
-    #<style>
-    #button[data-baseweb="tab"] > div[data-testid="stMarkdownContainer"] > p {
-    #font-size: 30px;
-    #}
-    #</style>
-    #"""
-
-    #st.write(font_css, unsafe_allow_html=True)
-
-
-    if selected3=='HOMEPAGE':
-
-
-        st.image('homepage.png',width=1800)
-
-        #st.markdown("<div style='text-align: center; font-size: 60px'><b>El Paso Data Dashboard</b></div>", unsafe_allow_html=True)
-
-    elif selected3=="ABOUT DASHBOARD":
-        st.image('1.jpg',width=1800)
+    
         
 
-        st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
-        st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'> The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
-        st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should be used to make conclusion or policy decision.</div>", unsafe_allow_html=True)
-        st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True)
-    elif selected3=="CONTACT US":
-        st.image('1.jpg',width=1800)
-        col1, col2,col3= st.columns(3)
-        with col1:
-            st.image('rcheu.png')
-        with col2:
-            st.markdown("<div style='text-align: justify; font-size: 24px'><b>Ruey L. Cheu<b></div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Professor</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Department of Civil Engineering</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>University of Texas at El Paso (UTEP)</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Office: Engineering Building A208</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Phone: (915) 747-5717</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Email: rcheu@utep.edu</div>", unsafe_allow_html=True)
-        with col3:
-   
-            st.image(['utep_new_logo.png'], use_column_width=True)
-            #st.image(['CTECH.jpeg'], use_column_width=True)
-        col4, col5,col6= st.columns(3)
-        with col4:
-            st.image('rke.png')
-        with col5:
-            st.markdown("<div style='text-align: justify; font-size: 24px'><b>Ruimin Ke<b></div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Assistant Professor</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Department of Civil Engineering</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>University of Texas at El Paso (UTEP)</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Office: Engineering Building A221</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Phone: (915) 747-8301</div>", unsafe_allow_html=True)
-            st.write('')
-            st.markdown("<div style='text-align: justify; font-size: 20px'>Email: rke@utep.edu</div>", unsafe_allow_html=True)
-        with col6:
-   
-            
-            st.image(['CTECH.jpeg'], use_column_width=True)
+    st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'> The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should be used to make conclusion or policy decision.</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True)
+
+
 
     st.markdown(
         """
@@ -134,6 +62,7 @@ def dashboard():
     crash_data = pd.read_csv('crash_data.csv')
     covid_data = pd.read_csv('covid_data.csv')
     traffic_data = pd.read_csv('traffic_data.csv')
+    bar_data=pd.read_csv('barrace.csv')
 
     # Set up the Streamlit app
     #st.title('El Paso Data Dashboard')
@@ -448,6 +377,12 @@ def dashboard():
         covid_data['date'] = pd.to_datetime(covid_data['date'], format='%m/%d/%y')
         filtered_data = covid_data[(covid_data['date'] >= pd.Timestamp(start_date)) & (covid_data['date'] <= pd.Timestamp(end_date))]
 
+        #################################################################
+        bar_data['Zipcode']=pd.to_datetime(bar_data['Zipcode'], format="%Y-%m-%d")
+        filtered_bar = bar_data[(bar_data['Zipcode'] >= pd.Timestamp(start_date)) & (bar_data['Zipcode'] <= pd.Timestamp(end_date))]
+        
+        #####################################################################
+
         grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']]
 
         # Reset the index to make zip code a column
@@ -501,7 +436,15 @@ def dashboard():
             st.altair_chart(chart)
         elif variable=='Bar chart race':
             st.write('The cumulative positive cases of each Zip code in El Paso')
-            video_file = open('bar_chart_race.mp4', 'rb')
+            filtered_bar=filtered_bar.set_index("Zipcode")
+            bcr.bar_chart_race(filtered_bar, 'bar_race.mp4')
+
+
+
+
+
+
+            video_file = open('bar_race.mp4', 'rb')
             video_bytes = video_file.read()
             st.video(video_bytes)       
 
@@ -554,7 +497,7 @@ def dashboard():
         # if zip_code != 'ALL':
         #     filtered_data = filtered_data[filtered_data['zip code'] == zip_code]
 #st.set_page_config(page_title='El Paso Data Dashboard',layout='wide')
-st.set_page_config(page_title='El Paso Data Dashboard', layout='wide',page_icon=':bar_chart:')  
+st.set_page_config(page_title='El Paso Data Dashboard', layout='centered',page_icon=':bar_chart:')  
 
 if 'dashboard_entered' not in st.session_state:
     st.session_state['dashboard_entered'] = False
