@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from streamlit_option_menu import option_menu
 import branca.colormap as cm
 import bar_chart_race as bcr
+from streamlit.components.v1 import html
 
 
 
@@ -437,16 +438,18 @@ def dashboard():
         elif variable=='Bar chart race':
             st.write('The cumulative positive cases of each Zip code in El Paso')
             filtered_bar=filtered_bar.set_index("Zipcode")
-            bcr.bar_chart_race(filtered_bar, 'bar_race.mp4')
+            fig=bcr.bar_chart_race(filtered_bar)
+
+            st.components.v1.html(fig.data)   
 
 
 
 
 
 
-            video_file = open('bar_race.mp4', 'rb')
-            video_bytes = video_file.read()
-            st.video(video_bytes)       
+            #video_file = open('bar_race.mp4', 'rb')
+            #video_bytes = video_file.read()
+            #st.video(video_bytes)       
 
             
 
