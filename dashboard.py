@@ -388,7 +388,7 @@ def dashboard():
     elif selected=='Health Data 🏥':
         # Set default values for start_date and end_date
         default_start_date = pd.to_datetime('2021-09-01')
-        default_end_date = pd.to_datetime('2022-03-31')
+        default_end_date = pd.to_datetime('2022-04-01')
 
         # Add a slider to allow the user to select a time frame
         start_date = st.sidebar.date_input('Start date', default_start_date)
