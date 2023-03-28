@@ -24,17 +24,37 @@ from streamlit.components.v1 import html
 
 
 def welcome():
+    st.image('home.jpg')
     
         
 
-    st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months,  from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months, from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
     st.write('')
-    st.markdown("<div style='text-align: justify; font-size: 20px'> The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: justify; font-size: 20px'>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
     st.write('')
-    st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should be used to make conclusion or policy decision.</div>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: justify; font-size: 20px'>This dashboard has a collection of four layers of data:</div>", unsafe_allow_html=True)
     st.write('')
-    st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True)
+    st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Demographic data: Population and median income by zip code from 2016 to 2020.</li></ul>", unsafe_allow_html=True)
+    st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Crash data: Traffic crashes at intersections in the City of El Paso, Texas from 1/1/2016 to 10/18/2021, downloaded from the Texas Department of Transportation’s (TxDOT’s) Crash Report Information System (CRIS) database. </li></ul>", unsafe_allow_html=True)
+    st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Traffic data: Selected vehicle trajectory data in the City of El Paso, Texas from mm/dd/yyyy to mm/dd/yyyy acquired from Wejo.</li></ul>", unsafe_allow_html=True)
+    st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Health data: Live data from the City of El Paso, Texas COVID-19 website. </li></ul>", unsafe_allow_html=True)
+    #st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Population and median income by zip code from 2016 to 2020.", unsafe_allow_html=True)
+    #st.markdown("<div style='text-align: justify; font-size: 20px'></div>", unsafe_allow_html=True)
+    st.write('')
 
+    st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should not be used to make a conclusion or policy decision.</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True) 
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'> Contact:</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'> Dr. Kelvin Cheu</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'> Professor, Department of Civil Engineering</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
+    st.write('')
+    st.markdown("<div style='text-align: justify; font-size: 20px'> Email: rcheu@utep.edu</div>", unsafe_allow_html=True)   
 
 
     st.markdown(
@@ -437,19 +457,19 @@ def dashboard():
             st.altair_chart(chart)
         elif variable=='Bar chart race':
             st.write('The cumulative positive cases of each Zip code in El Paso')
-            filtered_bar=filtered_bar.set_index("Zipcode")
-            fig=bcr.bar_chart_race(filtered_bar)
+            #filtered_bar=filtered_bar.set_index("Zipcode")
+            #fig=bcr.bar_chart_race(filtered_bar,'bar_race.mp4')
 
-            st.components.v1.html(fig.data)   
-
-
+            #st.components.v1.html(fig.data)   
 
 
 
 
-            #video_file = open('bar_race.mp4', 'rb')
-            #video_bytes = video_file.read()
-            #st.video(video_bytes)       
+
+
+            video_file = open('bar_chart_race.mp4', 'rb')
+            video_bytes = video_file.read()
+            st.video(video_bytes)       
 
             
 
