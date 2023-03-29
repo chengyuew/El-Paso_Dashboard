@@ -9,4 +9,4 @@ datetime==5.1
 matplotlib==3.7.0
 branca==0.6.0
 bar_chart_race==0.1.0
-ffmpeg==4.2.7
+ffmpeg==1.3
