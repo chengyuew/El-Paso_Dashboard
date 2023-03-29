@@ -24,9 +24,9 @@ from streamlit.components.v1 import html
 
 
 def welcome():
-    selected2 = option_menu(None, ["HOMEPAGE", "ABOUT DASHBOARD"], 
+    selected2 = option_menu(None, ["ABOUT",'PEOPLE','DISCLAIMER'], 
     #icons=['house', 'cloud-upload', "list-task"], 
-    menu_icon="cast", default_index=0, orientation="horizontal",
+    menu_icon="cahst", default_index=0, orientation="horizontal",
     styles={
     "container": {"padding": "0!important", "background-color": "#a6e7ed"},
     "icon": {"color": "#a6e7ed", "font-size": "25px"}, 
@@ -34,8 +34,20 @@ def welcome():
     "nav-link-selected": {"background-color": "#a6e7ed"},
     }
     )
-    if selected2=="HOMEPAGE":
+    if selected2=="ABOUT":
         st.image('homepage.png')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months, from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
+        st.write('')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
+        st.write('')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>This dashboard has a collection of four layers of data:</div>", unsafe_allow_html=True)
+        st.write('')
+        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Demographic data: Population and median income by zip code from 2016 to 2020.</li></ul>", unsafe_allow_html=True)
+        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Crash data: Traffic crashes at intersections in the City of El Paso, Texas from 1/1/2016 to 10/18/2021, downloaded from the Texas Department of Transportation’s (TxDOT’s) Crash Report Information System (CRIS) database. </li></ul>", unsafe_allow_html=True)
+        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Traffic data: Selected vehicle trajectory data in the City of El Paso, Texas from mm/dd/yyyy to mm/dd/yyyy acquired from Wejo.</li></ul>", unsafe_allow_html=True)
+        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Health data: Live data from the City of El Paso, Texas COVID-19 website. </li></ul>", unsafe_allow_html=True)
+        
+
         st.markdown(
         """
         <style>
@@ -55,27 +67,8 @@ def welcome():
         if st.button("Double Click Enter El Paso Data Dashboard"):
             # Set the session state to True to indicate that the user has entered the dashboard
             st.session_state['dashboard_entered'] = True   
-    
-    elif selected2=="ABOUT DASHBOARD":
+    elif selected2=='PEOPLE':
         st.image('homepage.png')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months, from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
-        st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
-        st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>This dashboard has a collection of four layers of data:</div>", unsafe_allow_html=True)
-        st.write('')
-        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Demographic data: Population and median income by zip code from 2016 to 2020.</li></ul>", unsafe_allow_html=True)
-        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Crash data: Traffic crashes at intersections in the City of El Paso, Texas from 1/1/2016 to 10/18/2021, downloaded from the Texas Department of Transportation’s (TxDOT’s) Crash Report Information System (CRIS) database. </li></ul>", unsafe_allow_html=True)
-        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Traffic data: Selected vehicle trajectory data in the City of El Paso, Texas from mm/dd/yyyy to mm/dd/yyyy acquired from Wejo.</li></ul>", unsafe_allow_html=True)
-        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Health data: Live data from the City of El Paso, Texas COVID-19 website. </li></ul>", unsafe_allow_html=True)
-        #st.markdown("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&bull; Population and median income by zip code from 2016 to 2020.", unsafe_allow_html=True)
-        #st.markdown("<div style='text-align: justify; font-size: 20px'></div>", unsafe_allow_html=True)
-        st.write('')
-
-        st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should not be used to make a conclusion or policy decision.</div>", unsafe_allow_html=True)
-        st.write('')
-        st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True) 
-        st.write('')
         st.markdown("<div style='text-align: justify; font-size: 20px'> Contact:</div>", unsafe_allow_html=True)
     
         st.markdown("<div style='text-align: justify; font-size: 20px'> Dr. Kelvin Cheu</div>", unsafe_allow_html=True)
@@ -84,7 +77,80 @@ def welcome():
         
         st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
     
-        st.markdown("<div style='text-align: justify; font-size: 20px'> Email: rcheu@utep.edu</div>", unsafe_allow_html=True)   
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Email: rcheu@utep.edu</div>", unsafe_allow_html=True) 
+
+        st.write('')  
+##############################################################################################
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Dr. Ruimin Ke</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Assistant Professor, Department of Civil Engineering</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Email: rke@utep.edu</div>", unsafe_allow_html=True) 
+        st.write('')   
+
+##############################################################################################
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Dr. Jeffrey Weidner</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Assistant Professor, Department of Civil Engineering</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Email: jweidner@utep.edu</div>", unsafe_allow_html=True)  
+        st.write('')  
+
+##############################################################################################
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Chengyue Wang</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Graduate Student Assistant, Department of Civil Engineering</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Email: cwang5@miners.utep.edu</div>", unsafe_allow_html=True)  
+        st.write('')  
+
+##############################################################################################
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Swapnil S Samant</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Graduate Student Assistant, Department of Civil Engineering</div>", unsafe_allow_html=True)
+        
+        st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
+    
+        st.markdown("<div style='text-align: justify; font-size: 20px'> Email: sssamant@miners.utep.edu</div>", unsafe_allow_html=True)  
+      
+
+
+        st.markdown(
+            """
+            <style>
+            .stButton button {
+                width: 400px;
+                height: 100px;
+                font-size: 80px;
+                font-weight: bold;
+                float: right;
+                
+            }
+            </style>
+            """,
+            unsafe_allow_html=True,
+            )
+
+        if st.button("Double Click Enter El Paso Data Dashboard"):
+            # Set the session state to True to indicate that the user has entered the dashboard
+            st.session_state['dashboard_entered'] = True   
+    
+    elif selected2=="DISCLAIMER":
+        st.image('homepage.png')
+
+        st.markdown("<div style='text-align: justify; font-size: 20px'>The data presented in this dashboard is for illustrative purposes. It should not be used to make a conclusion or policy decision.</div>", unsafe_allow_html=True)
+        st.write('')
+        st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True) 
 
 
         st.markdown(
@@ -181,7 +247,7 @@ def dashboard():
     elif selected=='Crash Data 🚗':
         # Set default values for start_date and end_date
         default_start_date = pd.to_datetime('2020-01-01')
-        default_end_date = pd.to_datetime('2020-03-01')
+        default_end_date = pd.to_datetime('2020-03-31')
 
         # Add a slider to allow the user to select a time frame
         start_date = st.sidebar.date_input('Start date', default_start_date)
