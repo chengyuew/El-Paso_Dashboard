@@ -570,9 +570,10 @@ def dashboard():
             st.write(' Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
             st.write(grouped_data) 
         elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
-            #chart = alt.Chart(filtered_zip_data).mark_line().encode(
+            #chart = alt.Chart(filtered_zip_data).mark_area(opacity=0.3).encode(
             #x='date:T',
-            #y=alt.Y(variable + ':Q', stack=True)
+            #y=alt.Y(variable + ':Q', stack=True),
+            #y2='0'
             
             
 
@@ -589,29 +590,39 @@ def dashboard():
             
 
             #st.altair_chart(chart)
+            chart_data =filtered_zip_data.set_index("date")
+            chart_data=chart_data[variable]
+
+
+            
+
+
+
+
+            st.area_chart(chart_data)
             
             
             
             
             
             
-            df=filtered_zip_data
+            #df=filtered_zip_data
             #color_scale=alt.Scale(domain=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue'],range=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue'])
-            fig, ax = plt.subplots()
-            X=df['date'].dt.strftime('%Y-%m-%d')
-            ax.bar(X,df[variable])
-            ax.tick_params(axis='x', labelrotation=90)
+            #fig, ax = plt.subplots()
+            #X=df['date'].dt.strftime('%Y-%m-%d')
+            #ax.bar(X,df[variable])
+            #ax.tick_params(axis='x', labelrotation=90)
 
             # Add labels and title
-            ax.set_xlabel('Date')
-            ax.set_ylabel(variable)
-            ax.set_title('Bar Chart of '+variable+'in Zip Code' + str(zip_code))
+            #ax.set_xlabel('Date')
+            #ax.set_ylabel(variable)
+            #ax.set_title('Bar Chart of '+variable+'in Zip Code' + str(zip_code))
 
   
            
 
             # Display the plot in Streamlit
-            st.pyplot(fig)
+            #st.pyplot(fig)
         elif variable=='Bar chart race':
             st.write('The cumulative positive cases of each Zip code in El Paso')
             #filtered_bar=filtered_bar.set_index("Zipcode")
