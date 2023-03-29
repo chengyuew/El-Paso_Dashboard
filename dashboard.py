@@ -428,8 +428,9 @@ def dashboard():
         grouped_data = grouped_data.reset_index()
 
         # Filter the data based on the user's selection
-        option5=sorted(covid_data['zip code'].unique())
-        option5.append('All Zip Code')
+        option5=['All Zip Code']
+        
+        option5.append(sorted(covid_data['zip code'].unique()))
         zip_code = st.sidebar.selectbox('Select a zip code', option5)
         if zip_code=='All Zip Code':
             filtered_zip_data=filtered_data
