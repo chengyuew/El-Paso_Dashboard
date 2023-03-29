@@ -73,7 +73,7 @@ def welcome():
         unsafe_allow_html=True,
         )
 
-    if st.button("Enter El Paso Data Dashboard"):
+    if st.button("Double Click Enter El Paso Data Dashboard"):
         # Set the session state to True to indicate that the user has entered the dashboard
         st.session_state['dashboard_entered'] = True   
 
