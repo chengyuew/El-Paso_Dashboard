@@ -57,7 +57,7 @@ def welcome():
             st.session_state['dashboard_entered'] = True   
     
     elif selected2=="ABOUT DASHBOARD":
-
+        st.image('homepage.png')
         st.markdown("<div style='text-align: justify; font-size: 20px'>Welcome to the El Paso Data Dashboard of Transportation, Environment and Community Health. This website is created as part of the project A Prototype Data Dashboard for Transportation, Environment and Community Health, funded by the Center for Transportation, Environment and Community Health for 15 months, from January 1, 2022 to March 31, 2023.</div>", unsafe_allow_html=True)
         st.write('')
         st.markdown("<div style='text-align: justify; font-size: 20px'>The objective of this project is to develop a customizable, scalable prototype data dashboard for visualization of transportation, environment, and community health data. This prototype data dashboard is a deliverable for this project. </div>", unsafe_allow_html=True)
