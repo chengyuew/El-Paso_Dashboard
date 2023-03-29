@@ -211,13 +211,17 @@ def dashboard():
                 lon = row['Crash Longitude']
                 ser= row['Crash Severity']
                 if ser=='NOT INJURED':
-                    folium.Marker(location=[lat, lon], tooltip='NOT INJURED', icon=folium.Icon(color='green',icon="n",prefix='fa')).add_to(m)
+                    folium.Marker(location=[lat, lon], tooltip='NOT INJURED', icon=folium.Icon(color='green',icon="o",prefix='fa')).add_to(m)
                 elif ser=='FATAL INJURY':
-                    folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="f",prefix='fa')).add_to(m)
+                    folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="k",prefix='fa')).add_to(m)
                 elif ser=='UNKNOWN':
                     folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='black',icon="u",prefix='fa')).add_to(m)
-                else: 
-                    folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa')).add_to(m)
+                elif ser=='SERIOUS INJURY': 
+                    folium.Marker(location=[lat, lon], tooltip='SUSPECTED SERIOUS INJURY', icon=folium.Icon(color='blue',icon="a",prefix='fa')).add_to(m)
+                elif ser=='SUSPECTED MINOR INJURY': 
+                    folium.Marker(location=[lat, lon], tooltip='SUSPECTED MINOR-INJURY', icon=folium.Icon(color='orange',icon="b",prefix='fa')).add_to(m)
+                elif ser=='POSSIBLE INJURY': 
+                    folium.Marker(location=[lat, lon], tooltip='POSSIBLE INJURY', icon=folium.Icon(color='pink',icon="c",prefix='fa')).add_to(m)
                         ################################################3
             #lgd_txt = '<span style="color: {col};">{txt}</span>'
             #fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
@@ -279,13 +283,17 @@ def dashboard():
                 lon = row['Crash Longitude']
                 ser= row['Crash Severity']
                 if ser=='NOT INJURED':
-                    marker=folium.Marker(location=[lat, lon], tooltip='NOT INJURED', icon=folium.Icon(color='green',icon="n",prefix='fa'))
+                    marker=folium.Marker(location=[lat, lon], tooltip='NOT INJURED', icon=folium.Icon(color='green',icon="o",prefix='fa'))
                 elif ser=='FATAL INJURY':
-                    marker=folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="f",prefix='fa'))
+                    marker=folium.Marker(location=[lat, lon], tooltip='FATAL', icon=folium.Icon(color='red',icon="k",prefix='fa'))
                 elif ser=='UNKNOWN':
                     marker=folium.Marker(location=[lat, lon], tooltip='UNKNOWN', icon=folium.Icon(color='black',icon="u",prefix='fa'))
-                else: 
-                    marker=folium.Marker(location=[lat, lon], tooltip='INJURY', icon=folium.Icon(color='blue',icon="i",prefix='fa'))
+                elif ser=='SERIOUS INJURY': 
+                    marker=folium.Marker(location=[lat, lon], tooltip='SUSPECTED SERIOUS INJURY', icon=folium.Icon(color='blue',icon="a",prefix='fa'))
+                elif ser=='SUSPECTED MINOR INJURY': 
+                    marker=folium.Marker(location=[lat, lon], tooltip='SUSPECTED MINOR-INJURY', icon=folium.Icon(color='orange',icon="b",prefix='fa'))
+                elif ser=='POSSIBLE INJURY': 
+                    marker=folium.Marker(location=[lat, lon], tooltip='POSSIBLE INJURY', icon=folium.Icon(color='pink',icon="c",prefix='fa'))
 
                 marker_cluster.add_child(marker)
             
