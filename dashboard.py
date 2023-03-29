@@ -61,7 +61,7 @@ def welcome():
         """
         <style>
         .stButton button {
-            width: 250px;
+            width: 300px;
             height: 100px;
             font-size: 80px;
             font-weight: bold;
