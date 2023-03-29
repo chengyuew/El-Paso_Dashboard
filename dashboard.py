@@ -24,7 +24,7 @@ from streamlit.components.v1 import html
 
 
 def welcome():
-    st.image('home.jpg')
+    st.image('homepage.png')
     
         
 
@@ -47,13 +47,13 @@ def welcome():
     st.markdown("<div style='text-align: justify; font-size: 20px'>The contents of this dashboard reflect the views of the authors, who are responsible for the facts and the accuracy of the information presented herein. This document is disseminated in the interest of information exchange. The project is funded, partially or entirely, by a grant from the U.S. Department of Transportation’s University Transportation Centers Program. However, the U.S. Government assumes no liability for the contents or use thereof.</div>", unsafe_allow_html=True) 
     st.write('')
     st.markdown("<div style='text-align: justify; font-size: 20px'> Contact:</div>", unsafe_allow_html=True)
-    st.write('')
+   
     st.markdown("<div style='text-align: justify; font-size: 20px'> Dr. Kelvin Cheu</div>", unsafe_allow_html=True)
-    st.write('')
+    
     st.markdown("<div style='text-align: justify; font-size: 20px'> Professor, Department of Civil Engineering</div>", unsafe_allow_html=True)
-    st.write('')
+    
     st.markdown("<div style='text-align: justify; font-size: 20px'> The University of Texas at El Paso</div>", unsafe_allow_html=True)
-    st.write('')
+   
     st.markdown("<div style='text-align: justify; font-size: 20px'> Email: rcheu@utep.edu</div>", unsafe_allow_html=True)   
 
 
