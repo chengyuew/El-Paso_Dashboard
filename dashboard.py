@@ -93,6 +93,7 @@ def dashboard():
     # Two lines
     st.title('El Paso Data Dashboard')
     st.subheader('Transportation, Environment and Community Health')
+    st.sidebar.markdown("<div style='text-align: justify; font-size: 36px'><b>Main menu<b></div>", unsafe_allow_html=True) 
 
     # One Line
     #st.title('El Paso Data Dashboard \n Transportation, Environment and Community Health')
@@ -100,9 +101,9 @@ def dashboard():
     # Add a dropdown to allow the user to select a data module
     #data_module = st.sidebar.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'])
     with st.sidebar:
-        option7=['Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥']
-        selected = option_menu("Main Menu", option7, 
-            icons=['car', 'traffic light','hospital'], menu_icon="nn", default_index=0,
+        option7=['Demographic 👪','Crash Data 🚗', 'Traffic Data 🚦', 'Health Data 🏥']
+        selected = option_menu(None,option7, 
+            icons=['car', 'traffic light','hospital','sfbu'], menu_icon="nn", default_index=0,
             styles={
             "container": {"padding": "0!important", "background-color": "#a6e7ed"},
             "icon": {"color": "orange", "font-size": "25px"}, 
@@ -130,7 +131,20 @@ def dashboard():
     # data_module = st.selectbox('Select a data module', ['Crash Data', 'Traffic Data', 'Health Data'], format_func=lambda x: icons[x]+' '+x)
 
     #if data_module == 'Crash Data':
-    if selected=='Crash Data 🚗':
+    if selected=='Demographic 👪':
+        year = st.sidebar.selectbox('Year', ['2017','2018','2019','2020'])
+        attribute=st.sidebar.selectbox('Attribute', ['Population','Median Income'])
+
+
+
+
+
+
+
+
+
+
+    elif selected=='Crash Data 🚗':
         # Set default values for start_date and end_date
         default_start_date = pd.to_datetime('2020-01-01')
         default_end_date = pd.to_datetime('2020-03-01')
@@ -411,15 +425,23 @@ def dashboard():
 
         # Filter the data based on the user's selection
         option5=sorted(covid_data['zip code'].unique())
+        option5.append('All Zip Code')
         zip_code = st.sidebar.selectbox('Select a zip code', option5)
-        filtered_zip_data = filtered_data[filtered_data['zip code'] == zip_code]
+        if zip_code=='All Zip Code':
+            filtered_zip_data=filtered_data
+        else:
+            filtered_zip_data = filtered_data[filtered_data['zip code'] == zip_code]
 
         # Set the date column as the index of the DataFrame
         #filtered_zip_data = filtered_zip_data.set_index('date')
 
         # Create a line chart of the total positive cases, recoveries, and deaths over time
         option6=['Total COVID cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']
-        variable = st.sidebar.selectbox('Data Display', option6)
+        #variable = st.sidebar.selectbox('Data Display', option6)
+        if zip_code=='All Zip Code':
+            variable=st.sidebar.selectbox('Data Display', ['Total COVID cases table','Bar chart race'])
+        else:
+            variable = st.sidebar.selectbox('Data Display', ['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
 
         # st.sidebar.subheader('Authors:')
         # st.sidebar.write('- Kelvin Cheu')
@@ -436,25 +458,48 @@ def dashboard():
             st.write(' Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
             st.write(grouped_data) 
         elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
-            chart = alt.Chart(filtered_zip_data).mark_line().encode(
-            x='date:T',
-            y=alt.Y(variable + ':Q', stack=True)
-            #color=variable + ''
-            
-    #"<span style='font-size:15px;'>date</span>"
-            ).properties(
-            title=f'               The {variable} over selected time range for zip code {zip_code}',
-            width=800,
-            height=400
-            )
-        # Display the line chart in the Streamlit app using altair_chart
-        
-            
-            chart=chart.configure_axis(labelFontSize=13)
+            #chart = alt.Chart(filtered_zip_data).mark_line().encode(
+            #x='date:T',
+            #y=alt.Y(variable + ':Q', stack=True)
             
             
 
-            st.altair_chart(chart)
+            #).properties(
+            #title=f'               The {variable} over selected time range for zip code {zip_code}',
+            #width=800,
+            #height=400
+            #)
+        # Display the line chart in the Streamlit app using altair_chart
+        
+            
+            #chart=chart.configure_axis(labelFontSize=13)
+            
+            
+
+            #st.altair_chart(chart)
+            
+            
+            
+            
+            
+            
+            df=filtered_zip_data
+            #color_scale=alt.Scale(domain=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue'],range=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue'])
+            fig, ax = plt.subplots()
+            X=df['date'].dt.strftime('%Y-%m-%d')
+            ax.bar(X,df[variable])
+            ax.tick_params(axis='x', labelrotation=90)
+
+            # Add labels and title
+            ax.set_xlabel('Date')
+            ax.set_ylabel(variable)
+            ax.set_title('Bar Chart of '+variable+'in Zip Code' + str(zip_code))
+
+  
+           
+
+            # Display the plot in Streamlit
+            st.pyplot(fig)
         elif variable=='Bar chart race':
             st.write('The cumulative positive cases of each Zip code in El Paso')
             #filtered_bar=filtered_bar.set_index("Zipcode")
