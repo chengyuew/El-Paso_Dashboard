@@ -506,19 +506,19 @@ def dashboard():
             st.pyplot(fig)
         elif variable=='Bar chart race':
             st.write('The cumulative positive cases of each Zip code in El Paso')
-            #filtered_bar=filtered_bar.set_index("Zipcode")
-            #fig=bcr.bar_chart_race(filtered_bar,'bar_race.mp4')
+            filtered_bar=filtered_bar.set_index("Zipcode")
+            fig=bcr.bar_chart_race(filtered_bar)
 
-            #st.components.v1.html(fig.data)   
-
-
+            st.components.v1.html(fig.data)   
 
 
 
 
-            video_file = open('bar_chart_race.mp4', 'rb')
-            video_bytes = video_file.read()
-            st.video(video_bytes)       
+
+
+            #video_file = open('bar_chart_race.mp4', 'rb')
+            #video_bytes = video_file.read()
+            #st.video(video_bytes)       
 
             
 
