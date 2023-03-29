@@ -132,8 +132,12 @@ def dashboard():
 
     #if data_module == 'Crash Data':
     if selected=='Demographic 👪':
-        year = st.sidebar.selectbox('Year', ['2017','2018','2019','2020'])
+        year = st.sidebar.selectbox('Year', ['2016','2017','2018','2019','2020'])
         attribute=st.sidebar.selectbox('Attribute', ['Population','Median Income'])
+        if year=='2016' and attribute=='Population':
+            st.markdown('##### The '+attribute+' of'+' Year '+ year)
+            st.write('The height of the bar represents the population in that Zip code area')
+            st.image('pop2016.png')
 
 
 
