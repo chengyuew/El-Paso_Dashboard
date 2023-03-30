@@ -234,52 +234,52 @@ def dashboard():
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('2016pop.png')
+            st.image('population_16.png')
         elif year=='2017' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('2017pop.png')
+            st.image('population_17.png')
         elif year=='2018' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('2018pop.png')
+            st.image('population_18.png')
         elif year=='2019' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('2019pop.png')
+            st.image('population_19.png')
         elif year=='2020' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('2020pop.png')
+            st.image('population_20.png')
         elif year=='2016' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('2016income.png')
+            st.image('income_16.png')
         elif year=='2017' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('2017income.png')
+            st.image('income_17.png')
         elif year=='2018' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('2018income.png')
+            st.image('income_18.png')
         elif year=='2019' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('2019income.png')
+            st.image('income_19.png')
         elif year=='2020' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('2020income.png')
+            st.image('income_20.png')
 
 
 
