@@ -488,9 +488,9 @@ def dashboard():
         #st.sidebar.image('CTECH.jpeg', width=200)
 
         #st.subheader('Speed-based Pattern Analysis')
-        st.write("Use this slider to filter the data of your interest by selecting a speed range (km/h)")
-        speed_threshold = st.slider('Only', min_value=0, max_value=120, step=5, value=50,label_visibility="collapsed")
-        speed_df = traffic_data[traffic_data['speed'] >= speed_threshold]
+        #st.write("Use this slider to filter the data of your interest by selecting a speed range (km/h)")
+        #speed_threshold = st.slider('Only', min_value=0, max_value=120, step=5, value=50,label_visibility="collapsed")
+        speed_df = traffic_data#[traffic_data['speed'] >= speed_threshold]
         #disply_type = st.sidebar.selectbox('Select a zip code', ['Table','Density Heatmap','Trajectory Visualization'])
         if disply_type == 'Table':
             if len(speed_df) > 0:
@@ -778,8 +778,8 @@ def dashboard():
         # filtered_data = covid_data[(covid_data['date'] >= start_date) & (covid_data['date'] <= end_date)]
         # if zip_code != 'ALL':
         #     filtered_data = filtered_data[filtered_data['zip code'] == zip_code]
-#st.set_page_config(page_title='El Paso Data Dashboard',layout='wide')
-st.set_page_config(page_title='El Paso Data Dashboard', layout='centered',page_icon=':bar_chart:')  
+#st.set_page_config(page_title='El Paso Data Dashboard',layout='wide')'centered'
+st.set_page_config(page_title='El Paso Data Dashboard', layout='wide',page_icon=':bar_chart:')  
 
 if 'dashboard_entered' not in st.session_state:
     st.session_state['dashboard_entered'] = False
