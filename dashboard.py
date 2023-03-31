@@ -639,11 +639,25 @@ def dashboard():
             st.write(grouped_data) 
         elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
             st.markdown('##### The '+variable+' from ' + str(start_date) + ' to ' + str(end_date) +' in ' +' Zip code '+ str(zip_code))
-            chart = alt.Chart(filtered_zip_data).mark_area().encode(
-            x='date:T',
-            y=alt.Y(variable + ':Q', stack=True),
-            color=alt.value('red')
-            )
+            filtered_zip_data = filtered_zip_data.rename(columns={'date': 'Date'})
+            if variable == 'Cumulative positive cases':
+                chart = alt.Chart(filtered_zip_data,width=700).mark_area().encode(
+                x='Date:T',
+                y=alt.Y(variable + ':Q', stack=True),
+                color=alt.value('orange')
+                )
+            elif variable == 'Cumulative recoveries':
+                chart = alt.Chart(filtered_zip_data,width=700).mark_area().encode(
+                x='Date:T',
+                y=alt.Y(variable + ':Q', stack=True),
+                color=alt.value('green')
+                )
+            elif variable == 'Cumulative deaths':
+                chart = alt.Chart(filtered_zip_data,width=700).mark_area().encode(
+                x='Date:T',
+                y=alt.Y(variable + ':Q', stack=True),
+                color=alt.value('black')
+                )
             #y2='0'
             
             
@@ -656,14 +670,14 @@ def dashboard():
         # Display the line chart in the Streamlit app using altair_chart
         
             
-            #chart=chart.configure_axis(labelFontSize=13)
+            chart=chart.configure_axis(labelFontSize=13)
 
             #filtered_zip_data['date']=pd.to_datetime(filtered_zip_data['date']).dt.strftime('%Y-%m')
             
-
+#################################################################
             st.altair_chart(chart)
-            chart_data =filtered_zip_data.set_index("date")
-            chart_data=chart_data[variable]
+            #chart_data =filtered_zip_data.set_index("date")
+            #chart_data=chart_data[variable]
 
 
 
@@ -672,9 +686,8 @@ def dashboard():
 
 
 
-            st.area_chart(chart_data)
-            
-            
+            #st.area_chart(chart_data)
+#################################################################
             
             
             
