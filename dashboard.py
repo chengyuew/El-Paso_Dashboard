@@ -564,15 +564,46 @@ def dashboard():
 
     #elif data_module == 'Health Data':
     elif selected=='Health Data 🏥':
-        # Set default values for start_date and end_date
-        default_start_date = pd.to_datetime('2021-09-01')
-        default_end_date = pd.to_datetime('2022-04-01')
+ 
 
-        # Add a slider to allow the user to select a time frame
+
+
+        # Filter the data based on the user's selection
+        option5=sorted(covid_data['zip code'].unique())
         
-        start_date = st.sidebar.date_input('Start date', default_start_date)
-        end_date = st.sidebar.date_input('End date', default_end_date)
+        option5.insert(0,'All Zip Code')
+        zip_code = st.sidebar.selectbox('Select a zip code', option5)
 
+
+        # Set the date column as the index of the DataFrame
+        #filtered_zip_data = filtered_zip_data.set_index('date')
+
+        # Create a line chart of the total positive cases, recoveries, and deaths over time
+        option6=['Total COVID cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']
+        #variable = st.sidebar.selectbox('Data Display', option6)
+        if zip_code=='All Zip Code':
+            variable=st.sidebar.selectbox('Data Display', ['Total COVID cases table','Bar chart race'])
+        else:
+            variable = st.sidebar.selectbox('Data Display', ['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
+
+        if variable=='Bar chart race':
+            default_start_date = pd.to_datetime('2020-03-01')
+            default_end_date = pd.to_datetime('2022-04-01')
+
+            # Add a slider to allow the user to select a time frame
+            
+            start_date = st.sidebar.date_input('Start date', default_start_date)
+            end_date = st.sidebar.date_input('End date', default_end_date)
+        else:
+            # Set default values for start_date and end_date
+            default_start_date = pd.to_datetime('2021-09-01')
+            default_end_date = pd.to_datetime('2022-03-31')
+
+            # Add a slider to allow the user to select a time frame
+            
+            start_date = st.sidebar.date_input('Start date', default_start_date)
+            end_date = st.sidebar.date_input('End date', default_end_date)
+                # Filter the data based on the user's selection
         # Filter the data based on the user's selection
         covid_data['date'] = pd.to_datetime(covid_data['date'], format='%m/%d/%y')
         filtered_data = covid_data[(covid_data['date'] >= pd.Timestamp(start_date)) & (covid_data['date'] <= pd.Timestamp(end_date))]
@@ -587,27 +618,6 @@ def dashboard():
 
         # Reset the index to make zip code a column
         grouped_data = grouped_data.reset_index()
-
-        # Filter the data based on the user's selection
-        option5=sorted(covid_data['zip code'].unique())
-        
-        option5.insert(0,'All Zip Code')
-        zip_code = st.sidebar.selectbox('Select a zip code', option5)
-        if zip_code=='All Zip Code':
-            filtered_zip_data=filtered_data
-        else:
-            filtered_zip_data = filtered_data[filtered_data['zip code'] == zip_code]
-
-        # Set the date column as the index of the DataFrame
-        #filtered_zip_data = filtered_zip_data.set_index('date')
-
-        # Create a line chart of the total positive cases, recoveries, and deaths over time
-        option6=['Total COVID cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']
-        #variable = st.sidebar.selectbox('Data Display', option6)
-        if zip_code=='All Zip Code':
-            variable=st.sidebar.selectbox('Data Display', ['Total COVID cases table','Bar chart race'])
-        else:
-            variable = st.sidebar.selectbox('Data Display', ['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
 
         # st.sidebar.subheader('Authors:')
         # st.sidebar.write('- Kelvin Cheu')
@@ -685,7 +695,12 @@ def dashboard():
             #filtered_bar=filtered_bar.set_index("Zipcode")
             #fig=bcr.bar_chart_race(filtered_bar)
 
-            #st.components.v1.html(fig.data)   
+
+
+  
+            
+      
+
 
 
 
