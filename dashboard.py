@@ -12,6 +12,7 @@ from streamlit_option_menu import option_menu
 import branca.colormap as cm
 import bar_chart_race as bcr
 from streamlit.components.v1 import html
+from dateutil import relativedelta
 
 
 
@@ -49,24 +50,22 @@ def welcome():
         
 
         st.markdown(
-            """
-            <style>
-            .stButton button {
-                width: 350px;
-                height: 80px;
-                font-size: 80px;
-                font-weight: bold;
-                float: right;
-                background-color: #a6e7ed;
-                
-            }
-            </style>
-            """,
-            unsafe_allow_html=True,
-            )
-       
+        """
+        <style>
+        .stButton button {
+            width: 400px;
+            height: 100px;
+            font-size: 80px;
+            font-weight: bold;
+            float: right;
+            
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+        )
 
-        if st.button('Double Click Enter El Paso Data Dashboard'):
+        if st.button("Double Click Enter El Paso Data Dashboard"):
             # Set the session state to True to indicate that the user has entered the dashboard
             st.session_state['dashboard_entered'] = True   
     elif selected2=='PEOPLE':
@@ -131,21 +130,19 @@ def welcome():
             """
             <style>
             .stButton button {
-                width: 350px;
-                height: 80px;
+                width: 400px;
+                height: 100px;
                 font-size: 80px;
                 font-weight: bold;
                 float: right;
-                background-color: #a6e7ed;
                 
             }
             </style>
             """,
             unsafe_allow_html=True,
             )
-       
 
-        if st.button('Double Click Enter El Paso Data Dashboard'):
+        if st.button("Double Click Enter El Paso Data Dashboard"):
             # Set the session state to True to indicate that the user has entered the dashboard
             st.session_state['dashboard_entered'] = True   
     
@@ -161,21 +158,19 @@ def welcome():
             """
             <style>
             .stButton button {
-                width: 350px;
-                height: 80px;
+                width: 400px;
+                height: 100px;
                 font-size: 80px;
                 font-weight: bold;
                 float: right;
-                background-color: #a6e7ed;
                 
             }
             </style>
             """,
             unsafe_allow_html=True,
             )
-       
 
-        if st.button('Double Click Enter El Paso Data Dashboard'):
+        if st.button("Double Click Enter El Paso Data Dashboard"):
             # Set the session state to True to indicate that the user has entered the dashboard
             st.session_state['dashboard_entered'] = True   
 
@@ -240,52 +235,52 @@ def dashboard():
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('population_16.png')
+            st.image('2016pop.png')
         elif year=='2017' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('population_17.png')
+            st.image('2017pop.png')
         elif year=='2018' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('population_18.png')
+            st.image('2018pop.png')
         elif year=='2019' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('population_19.png')
+            st.image('2019pop.png')
         elif year=='2020' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
-            st.image('population_20.png')
+            st.image('2020pop.png')
         elif year=='2016' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('income_16.png')
+            st.image('2016income.png')
         elif year=='2017' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('income_17.png')
+            st.image('2017income.png')
         elif year=='2018' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('income_18.png')
+            st.image('2018income.png')
         elif year=='2019' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('income_19.png')
+            st.image('2019income.png')
         elif year=='2020' and attribute=='Median Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the Median Income in that Zip code area')
-            st.image('income_20.png')
+            st.image('2020income.png')
 
 
 
@@ -464,14 +459,13 @@ def dashboard():
         traffic_data['postalcode'].replace([np.nan, np.inf, -np.inf], 0, inplace=True)
         traffic_data['postalcode'] = traffic_data['postalcode'].astype(int)
         option3=sorted(traffic_data['postalcode'].unique())
-        option3[0]="All Zip Code"
 
         zip_code = st.sidebar.selectbox('Select a zip code', option3)
         option4=['Table','Density Heat Map','Trajectory Visualization']
         disply_type = st.sidebar.selectbox('Select a display type', option4)
         # if zip_code == -1:
         #     zip_code = 'All'
-        if zip_code != "All Zip Code":
+        if zip_code != 0:
             traffic_data = traffic_data[traffic_data['postalcode'] == zip_code]
 
         # st.sidebar.subheader('Authors:')
@@ -536,7 +530,7 @@ def dashboard():
 
             # Trajectory analysis based on journeyid
             st.markdown('#### Trajectory Visualization')
-            st.write('Each trip is represented by a color coded marker with the origin O and the destination D')
+            st.write('Each trip is represented by a color')
             #st.write('O icon means the origin, D icon means destination')
             m2 = folium.Map(location=[31.771959, -106.438233], zoom_start=10)
             colors=['blue', 'lightblue', 'white', 'gray', 'beige', 'darkred', 'darkgreen', 'pink', 'orange', 'red', 'cadetblue', 'black', 'lightgreen', 'purple', 'lightgray', 'lightred', 'darkpurple', 'green', 'darkblue']
@@ -564,16 +558,38 @@ def dashboard():
 
     #elif data_module == 'Health Data':
     elif selected=='Health Data 🏥':
- 
+        # Set default values for start_date and end_date
+        default_start_date = pd.to_datetime('2021-09-01')
+        default_end_date = pd.to_datetime('2022-04-01')
 
+        # Add a slider to allow the user to select a time frame
+        start_date = st.sidebar.date_input('Start date', default_start_date)
+        end_date = st.sidebar.date_input('End date', default_end_date)
 
+        # Filter the data based on the user's selection
+        covid_data['date'] = pd.to_datetime(covid_data['date'], format='%m/%d/%y')
+        filtered_data = covid_data[(covid_data['date'] >= pd.Timestamp(start_date)) & (covid_data['date'] <= pd.Timestamp(end_date))]
+
+        #################################################################
+        bar_data['Zipcode']=pd.to_datetime(bar_data['Zipcode'], format="%Y-%m-%d")
+        filtered_bar = bar_data[(bar_data['Zipcode'] >= pd.Timestamp(start_date)) & (bar_data['Zipcode'] <= pd.Timestamp(end_date))]
+        
+        #####################################################################
+
+        grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']]
+
+        # Reset the index to make zip code a column
+        grouped_data = grouped_data.reset_index()
 
         # Filter the data based on the user's selection
         option5=sorted(covid_data['zip code'].unique())
         
         option5.insert(0,'All Zip Code')
         zip_code = st.sidebar.selectbox('Select a zip code', option5)
-
+        if zip_code=='All Zip Code':
+            filtered_zip_data=filtered_data
+        else:
+            filtered_zip_data = filtered_data[filtered_data['zip code'] == zip_code]
 
         # Set the date column as the index of the DataFrame
         #filtered_zip_data = filtered_zip_data.set_index('date')
@@ -585,39 +601,6 @@ def dashboard():
             variable=st.sidebar.selectbox('Data Display', ['Total COVID cases table','Bar chart race'])
         else:
             variable = st.sidebar.selectbox('Data Display', ['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
-
-        if variable=='Bar chart race':
-            default_start_date = pd.to_datetime('2020-03-01')
-            default_end_date = pd.to_datetime('2022-04-01')
-
-            # Add a slider to allow the user to select a time frame
-            
-            start_date = st.sidebar.date_input('Start date', default_start_date)
-            end_date = st.sidebar.date_input('End date', default_end_date)
-        else:
-            # Set default values for start_date and end_date
-            default_start_date = pd.to_datetime('2021-09-01')
-            default_end_date = pd.to_datetime('2022-03-31')
-
-            # Add a slider to allow the user to select a time frame
-            
-            start_date = st.sidebar.date_input('Start date', default_start_date)
-            end_date = st.sidebar.date_input('End date', default_end_date)
-                # Filter the data based on the user's selection
-        # Filter the data based on the user's selection
-        covid_data['date'] = pd.to_datetime(covid_data['date'], format='%m/%d/%y')
-        filtered_data = covid_data[(covid_data['date'] >= pd.Timestamp(start_date)) & (covid_data['date'] <= pd.Timestamp(end_date))]
-
-        #################################################################
-        #bar_data['Zipcode']=pd.to_datetime(bar_data['Zipcode'], format="%Y-%m-%d")
-        #filtered_bar = bar_data[(bar_data['Zipcode'] >= pd.Timestamp(start_date)) & (bar_data['Zipcode'] <= pd.Timestamp(end_date))]
-        
-        #####################################################################
-
-        grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']]
-
-        # Reset the index to make zip code a column
-        grouped_data = grouped_data.reset_index()
 
         # st.sidebar.subheader('Authors:')
         # st.sidebar.write('- Kelvin Cheu')
@@ -634,7 +617,6 @@ def dashboard():
             st.write(' Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
             st.write(grouped_data) 
         elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
-            st.markdown('##### The '+variable+' from ' + str(start_date) + ' to ' + str(end_date) +' in ' +' Zip code '+ str(zip_code))
             #chart = alt.Chart(filtered_zip_data).mark_area(opacity=0.3).encode(
             #x='date:T',
             #y=alt.Y(variable + ':Q', stack=True),
@@ -651,8 +633,7 @@ def dashboard():
         
             
             #chart=chart.configure_axis(labelFontSize=13)
-
-            #filtered_zip_data['date']=pd.to_datetime(filtered_zip_data['date']).dt.strftime('%Y-%m')
+            
             
 
             #st.altair_chart(chart)
@@ -660,8 +641,7 @@ def dashboard():
             chart_data=chart_data[variable]
 
 
-
-
+            
 
 
 
@@ -691,25 +671,24 @@ def dashboard():
             # Display the plot in Streamlit
             #st.pyplot(fig)
         elif variable=='Bar chart race':
-            st.write('The cumulative positive cases of each Zip code in El Paso from 2020-03-01 to 2022-04-01')
+            st.write('The cumulative positive cases of each Zip code in El Paso')
             #filtered_bar=filtered_bar.set_index("Zipcode")
             #fig=bcr.bar_chart_race(filtered_bar)
 
-
-
-  
-            
-      
-
-
-
+            #st.components.v1.html(fig.data)   
+            delta = relativedelta.relativedelta(end_date, start_date)
+            print(start_date.month)
+            print(delta.months)
+            print(delta.years)
 
 
 
 
-            video_file = open('bar_chart_race.mp4', 'rb')
+
+
+            video_file = open('bar_race.mp4', 'rb')
             video_bytes = video_file.read()
-            st.video(video_bytes)       
+            st.video(video_bytes,start_time=1)       
 
             
 
