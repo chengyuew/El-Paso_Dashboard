@@ -667,6 +667,7 @@ def dashboard():
     
         if variable=='Table':
             st.write(' Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
+            grouped_data['zip code']=grouped_data['zip code'].apply(str)
             st.write(grouped_data) 
         elif variable=='Cumulative Positive Curve' or variable=='Cumulative Recovery Curve' or variable=='Cumulative Death Curve':
             st.markdown('##### The '+variable+' from ' + str(start_date) + ' to ' + str(end_date) +' in ' +' Zip code '+ str(zip_code))
