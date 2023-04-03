@@ -235,7 +235,7 @@ def dashboard():
     #if data_module == 'Crash Data':
     if selected=='Demographic 👪':
         year = st.sidebar.selectbox('Year', ['2016','2017','2018','2019','2020'])
-        attribute=st.sidebar.selectbox('Attribute', ['Population','Median Income'])
+        attribute=st.sidebar.selectbox('Attribute', ['Population','Median Household Income'])
         if year=='2016' and attribute=='Population':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
@@ -261,30 +261,30 @@ def dashboard():
             st.write('The black number represents the Zip code of that area')
             st.write('The red number and the bar represents the population in that Zip code area')
             st.image('population_20.png')
-        elif year=='2016' and attribute=='Median Income':
+        elif year=='2016' and attribute=='Median Household Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
-            st.write('The red number and the bar represents the Median Income in that Zip code area')
+            st.write('The red number and the bar represents the Median Household Income in that Zip code area')
             st.image('income_16.png')
-        elif year=='2017' and attribute=='Median Income':
+        elif year=='2017' and attribute=='Median Household Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
-            st.write('The red number and the bar represents the Median Income in that Zip code area')
+            st.write('The red number and the bar represents the Median Household Income in that Zip code area')
             st.image('income_17.png')
-        elif year=='2018' and attribute=='Median Income':
+        elif year=='2018' and attribute=='Median Household Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
-            st.write('The red number and the bar represents the Median Income in that Zip code area')
+            st.write('The red number and the bar represents the Median Household Income in that Zip code area')
             st.image('income_18.png')
-        elif year=='2019' and attribute=='Median Income':
+        elif year=='2019' and attribute=='Median Household Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
-            st.write('The red number and the bar represents the Median Income in that Zip code area')
+            st.write('The red number and the bar represents the Median Household Income in that Zip code area')
             st.image('income_19.png')
-        elif year=='2020' and attribute=='Median Income':
+        elif year=='2020' and attribute=='Median Household Income':
             st.markdown('##### The '+attribute+' of'+' Year '+ year)
             st.write('The black number represents the Zip code of that area')
-            st.write('The red number and the bar represents the Median Income in that Zip code area')
+            st.write('The red number and the bar represents the Median Household Income in that Zip code area')
             st.image('income_20.png')
 
 
@@ -304,7 +304,7 @@ def dashboard():
 
         # Add options to select the type of map display
         option1=['Marker Cluster', 'Heat Map', 'Markers','Crash Map']
-        map_type = st.sidebar.selectbox('Map_Display', option1)
+        map_type = st.sidebar.selectbox('Display Mode', option1)
 
         # Add options to filter by crash severity
 
@@ -343,7 +343,7 @@ def dashboard():
             start_date = st.sidebar.date_input('Start date', default_start_date)
             end_date = st.sidebar.date_input('End date', default_end_date)
                     # Add options to filter by crash severity
-            option2=['TOTAL','NOT INJURED', 'SUSPECTED MINOR INJURY', 'POSSIBLE INJURY', 'SUSPECTED SERIOUS INJURY', 'FATAL INJURY', 'UNKNOWN']
+            option2=['All','NOT INJURED', 'SUSPECTED MINOR INJURY', 'POSSIBLE INJURY', 'SUSPECTED SERIOUS INJURY', 'FATAL INJURY', 'UNKNOWN']
             crash_severity = st.sidebar.selectbox('Crash Severity', option2)
 
 
@@ -352,7 +352,7 @@ def dashboard():
             # Filter the data based on the user's selection
             filtered_data = crash_data[(crash_data['Crash Date'] >= pd.Timestamp(start_date)) & (crash_data['Crash Date'] <= pd.Timestamp(end_date))]
 
-            if crash_severity != 'TOTAL':
+            if crash_severity != 'All':
                 filtered_data = filtered_data[filtered_data['Crash Severity'] == crash_severity]
 
             # Create a map using Folium
