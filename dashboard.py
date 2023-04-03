@@ -297,194 +297,171 @@ def dashboard():
 
 
     elif selected=='Crash Data 🚗':
+        # Set default values for start_date and end_date
+        default_start_date = pd.to_datetime('2020-01-01')
+        default_end_date = pd.to_datetime('2020-03-31')
 
+        # Add a slider to allow the user to select a time frame
+        start_date = st.sidebar.date_input('Start date', default_start_date)
+        end_date = st.sidebar.date_input('End date', default_end_date)
 
 
         
 
         # Add options to select the type of map display
-        option1=['Marker Cluster', 'Heat Map', 'Markers','Crash Map']
+        option1=['Marker Cluster', 'Heat Map', 'Markers']
         map_type = st.sidebar.selectbox('Display Mode', option1)
 
         # Add options to filter by crash severity
 
-        if map_type=='Crash Map':
-            attribute=st.sidebar.selectbox('Attribute', ['Crashes','Crash Rate'])
-            if attribute=='Crashes':
-                year = st.sidebar.selectbox('Period', ['2016-2019','2020'])
-                st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
-                if year=='2016-2019':
-                    st.markdown('##### The '+attribute+' number of'+' Year '+ year)
-                    st.write('The black number represents the Zip code of that area')
-                    st.write('The red number and the bar represents the average crashes number in that Zip code area')
-                    st.image('crash2016.png')
-                elif year=='2020':
-                    st.markdown('##### The '+attribute+' number of'+' Year '+ year)
-                    st.write('The black number represents the Zip code of that area')
-                    st.write('The red number and the bar represents the crashes number in that Zip code area')
-                    st.image('crash2020.png')
-            elif attribute=='Crash Rate':
+
+
+
+
+    
+                # Add options to filter by crash severity
+        option2=['All','Not Injured', 'Suspected Minor Injury', 'Possible Injury', 'Suspected Serious Injury', 'Fatal Injury', 'Unknown']
+        crash_severity = st.sidebar.selectbox('Crash Severity', option2)
+
+
+        crash_data['Crash Date'] = pd.to_datetime(crash_data['Crash Date'], format='%m/%d/%Y')
+
+        # Filter the data based on the user's selection
+        filtered_data = crash_data[(crash_data['Crash Date'] >= pd.Timestamp(start_date)) & (crash_data['Crash Date'] <= pd.Timestamp(end_date))]
+
+        if crash_severity != 'All':
+            filtered_data = filtered_data[filtered_data['Crash Severity'] == crash_severity.upper()]
+
+        # Create a map using Folium
+        m = folium.Map(location=[31.7619, -106.4850], zoom_start=11)
+
+
+        # Add markers to the map for each crash in the filtered data
+        #for index, row in filtered_data.iterrows():
+        #    lat = row['Crash Latitude']
+        #    lon = row['Crash Longitude']
+        #    marker = folium.Marker([lat, lon])
+        #    marker.add_to(m)
+        # Add markers, heatmap, or marker clusters to the map based on user selection
+
+        # st.sidebar.subheader('Authors:')
+        # st.sidebar.write('- Kelvin Cheu')
+        # st.sidebar.write('- Ruimin Ke')
+        # st.sidebar.write('- Chengyue Wang')
+        # st.sidebar.write('- Swapnil Samat')
+        # st.sidebar.write('- Jeffrey Weidner') 
+        # CTECH logo and UTEP logo are side-by-side
+        st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
+        #CTECH logo is below to UTEP logo
+        #st.sidebar.image('utep_new_logo.png', width=200)
+        #st.sidebar.image('CTECH.jpeg', width=200)
+        if map_type == 'Markers':
+            st.write('Each icon represents one crash')
+
+            #st.write('Green N icon represents the crash severity is NOT INJURED')
+            #st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
+            #st.write('Red F icon represents the crash severity is FATAL INJURY')
+            #st.write('Pink U icon represents the crash severity is UNKNOWN')
+            #if crash_severity!='SUSPECTED SERIOUS INJURY':
+            for index, row in filtered_data.iterrows():
+                lat = row['Crash Latitude']
+                lon = row['Crash Longitude']
+                ser= row['Crash Severity']
+                if ser=='NOT INJURED':
+                    folium.Marker(location=[lat, lon], tooltip='Not Injured', icon=folium.Icon(color='green',icon="o",prefix='fa')).add_to(m)
+                elif ser=='FATAL INJURY':
+                    folium.Marker(location=[lat, lon], tooltip='Fatal Injury', icon=folium.Icon(color='red',icon="k",prefix='fa')).add_to(m)
+                elif ser=='UNKNOWN':
+                    folium.Marker(location=[lat, lon], tooltip='Unknown', icon=folium.Icon(color='black',icon="u",prefix='fa')).add_to(m)
+                elif ser=='SUSPECTED SERIOUS INJURY': 
+                    folium.Marker(location=[lat, lon], tooltip='Suspected Serious Injury', icon=folium.Icon(color='blue',icon="a",prefix='fa')).add_to(m)
+                elif ser=='SUSPECTED MINOR INJURY': 
+                    folium.Marker(location=[lat, lon], tooltip='Suspected Minor Injury', icon=folium.Icon(color='orange',icon="b",prefix='fa')).add_to(m)
+                elif ser=='POSSIBLE INJURY': 
+                    folium.Marker(location=[lat, lon], tooltip='Possible Injury', icon=folium.Icon(color='pink',icon="c",prefix='fa')).add_to(m)
+                        ################################################3
+            #else:
+            #    st.write('None crashes occurred with the severity of suspected serious injury')
+            #lgd_txt = '<span style="color: {col};">{txt}</span>'
+            #fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
+            
+#           m.add_child( fg1)
+
+
+
+
+
+
+
+            ############################################3
+            #folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
+
+
                 
-                st.markdown('##### Crash Rate comparison before and after COVID')
-                st.write('The black number represents the Zip code of that area')
-                st.write('The purple number and the bar represents the Crash rate(Crashes/year /10,000 pop) in that Zip code area before COVID')
-                st.write('The green number and the bar represents the Crash rate(Crashes/year /10,000 pop) in that Zip code area during COVID')
-                st.image('compare.png')
-                st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
+            # marker = folium.Marker([lat, lon])
+                
+                #marker.add_to(m)
 
 
+            
+            
+        elif map_type == 'Heat Map':
+            data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
+            st.write('The colors represent the likelihood of a crash happen in that area')
+            heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
+                            blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
+            heatmap_layer.add_to(m)
+            ###########################################################################
+
+
+
+            step = cm.StepColormap(['green','blue','yellow','red','maroon'],
+                                vmin=0, vmax=1, index=[0,0.2,0.4,0.6,0.8,1],
+                                caption='Density')
+            #folium.map.LayerControl('topleft', collapsed= False).add_to(m)
+
+            step.add_to(m)
+    ###############################################################################################################
+
+
+            #folium_static(m)
+            #folium.plugins.heatmap_layer.add_to(m)
         else:
-        
-            # Set default values for start_date and end_date
-            default_start_date = pd.to_datetime('2020-01-01')
-            default_end_date = pd.to_datetime('2020-03-31')
-
-            # Add a slider to allow the user to select a time frame
-            start_date = st.sidebar.date_input('Start date', default_start_date)
-            end_date = st.sidebar.date_input('End date', default_end_date)
-                    # Add options to filter by crash severity
-            option2=['All','Not Injured', 'Suspected Minor Injury', 'Possible Injury', 'Suspected Serious Injury', 'Fatal Injury', 'Unknown']
-            crash_severity = st.sidebar.selectbox('Crash Severity', option2)
-
-
-            crash_data['Crash Date'] = pd.to_datetime(crash_data['Crash Date'], format='%m/%d/%Y')
-
-            # Filter the data based on the user's selection
-            filtered_data = crash_data[(crash_data['Crash Date'] >= pd.Timestamp(start_date)) & (crash_data['Crash Date'] <= pd.Timestamp(end_date))]
-
-            if crash_severity != 'All':
-                filtered_data = filtered_data[filtered_data['Crash Severity'] == crash_severity.upper()]
-
-            # Create a map using Folium
-            m = folium.Map(location=[31.7619, -106.4850], zoom_start=11)
-
-
-            # Add markers to the map for each crash in the filtered data
-            #for index, row in filtered_data.iterrows():
-            #    lat = row['Crash Latitude']
-            #    lon = row['Crash Longitude']
-            #    marker = folium.Marker([lat, lon])
-            #    marker.add_to(m)
-            # Add markers, heatmap, or marker clusters to the map based on user selection
-
-            # st.sidebar.subheader('Authors:')
-            # st.sidebar.write('- Kelvin Cheu')
-            # st.sidebar.write('- Ruimin Ke')
-            # st.sidebar.write('- Chengyue Wang')
-            # st.sidebar.write('- Swapnil Samat')
-            # st.sidebar.write('- Jeffrey Weidner') 
-            # CTECH logo and UTEP logo are side-by-side
-            st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
-            #CTECH logo is below to UTEP logo
-            #st.sidebar.image('utep_new_logo.png', width=200)
-            #st.sidebar.image('CTECH.jpeg', width=200)
-            if map_type == 'Markers':
-                st.write('Each icon represents one crash')
-
-                #st.write('Green N icon represents the crash severity is NOT INJURED')
-                #st.write('Blue I icon represents the crash severity is SUSPECTED MINOR INJURY or POSSIBLE INJURY SUSPECTED or SERIOUS INJURY')
-                #st.write('Red F icon represents the crash severity is FATAL INJURY')
-                #st.write('Pink U icon represents the crash severity is UNKNOWN')
-                #if crash_severity!='SUSPECTED SERIOUS INJURY':
-                for index, row in filtered_data.iterrows():
-                    lat = row['Crash Latitude']
-                    lon = row['Crash Longitude']
-                    ser= row['Crash Severity']
-                    if ser=='NOT INJURED':
-                        folium.Marker(location=[lat, lon], tooltip='Not Injured', icon=folium.Icon(color='green',icon="o",prefix='fa')).add_to(m)
-                    elif ser=='FATAL INJURY':
-                        folium.Marker(location=[lat, lon], tooltip='Fatal Injury', icon=folium.Icon(color='red',icon="k",prefix='fa')).add_to(m)
-                    elif ser=='UNKNOWN':
-                        folium.Marker(location=[lat, lon], tooltip='Unknown', icon=folium.Icon(color='black',icon="u",prefix='fa')).add_to(m)
-                    elif ser=='SUSPECTED SERIOUS INJURY': 
-                        folium.Marker(location=[lat, lon], tooltip='Suspected Serious Injury', icon=folium.Icon(color='blue',icon="a",prefix='fa')).add_to(m)
-                    elif ser=='SUSPECTED MINOR INJURY': 
-                        folium.Marker(location=[lat, lon], tooltip='Suspected Minor Injury', icon=folium.Icon(color='orange',icon="b",prefix='fa')).add_to(m)
-                    elif ser=='POSSIBLE INJURY': 
-                        folium.Marker(location=[lat, lon], tooltip='Possible Injury', icon=folium.Icon(color='pink',icon="c",prefix='fa')).add_to(m)
-                            ################################################3
-                #else:
-                #    st.write('None crashes occurred with the severity of suspected serious injury')
-                #lgd_txt = '<span style="color: {col};">{txt}</span>'
-                #fg1 = folium.FeatureGroup(name= lgd_txt.format( txt= 'N icon is Not Injured Carsh', col='green'))
-                
-    #           m.add_child( fg1)
+            from folium.plugins import MarkerCluster
+            st.write('The number in the circle is the number of crashes happened in that area')
     
 
+            marker_cluster = MarkerCluster(name='Marker Cluster')
 
 
 
+            for index, row in filtered_data.iterrows():
+                lat = row['Crash Latitude']
+                lon = row['Crash Longitude']
+                ser= row['Crash Severity']
+                if ser=='NOT INJURED':
+                    marker=folium.Marker(location=[lat, lon], tooltip='Not Injured', icon=folium.Icon(color='green',icon="o",prefix='fa'))
+                elif ser=='FATAL INJURY':
+                    marker=folium.Marker(location=[lat, lon], tooltip='Fatal Injury', icon=folium.Icon(color='red',icon="k",prefix='fa'))
+                elif ser=='UNKNOWN':
+                    marker=folium.Marker(location=[lat, lon], tooltip='Unknown', icon=folium.Icon(color='black',icon="u",prefix='fa'))
+                elif ser=='SUSPECTED SERIOUS INJURY': 
+                    marker=folium.Marker(location=[lat, lon], tooltip='Suspected Serious Injury', icon=folium.Icon(color='blue',icon="a",prefix='fa'))
+                elif ser=='SUSPECTED MINOR INJURY': 
+                    marker=folium.Marker(location=[lat, lon], tooltip='Suspected Minor Injury', icon=folium.Icon(color='orange',icon="b",prefix='fa'))
+                elif ser=='POSSIBLE INJURY': 
+                    marker=folium.Marker(location=[lat, lon], tooltip='Possible Injury', icon=folium.Icon(color='pink',icon="c",prefix='fa'))
+
+                marker_cluster.add_child(marker)
+            
+            marker_cluster.add_to(m)
 
 
-                ############################################3
-                #folium.map.LayerControl('bottomleft', collapsed= False).add_to(m)
-
-
-                    
-                # marker = folium.Marker([lat, lon])
-                    
-                    #marker.add_to(m)
-
-
-                
-                
-            elif map_type == 'Heat Map':
-                data = filtered_data[['Crash Latitude', 'Crash Longitude']].values.tolist()
-                st.write('The colors represent the likelihood of a crash happen in that area')
-                heatmap_layer = HeatMap(data, name='Crashes Location Heat Map', min_opacity=0.2,
-                                blur=5, max_zoom=10, radius=10, gradient={0.2: 'green', 0.4: 'blue', 0.6: 'yellow', 0.8: 'red', 1:'maroon'})
-                heatmap_layer.add_to(m)
-                ###########################################################################
-
-
-
-                step = cm.StepColormap(['green','blue','yellow','red','maroon'],
-                                    vmin=0, vmax=1, index=[0,0.2,0.4,0.6,0.8,1],
-                                    caption='Density')
-                #folium.map.LayerControl('topleft', collapsed= False).add_to(m)
-
-                step.add_to(m)
-        ###############################################################################################################
-
-
-                #folium_static(m)
-                #folium.plugins.heatmap_layer.add_to(m)
-            else:
-                from folium.plugins import MarkerCluster
-                st.write('The number in the circle is the number of crashes happened in that area')
-        
-
-                marker_cluster = MarkerCluster(name='Marker Cluster')
 
     
 
-                for index, row in filtered_data.iterrows():
-                    lat = row['Crash Latitude']
-                    lon = row['Crash Longitude']
-                    ser= row['Crash Severity']
-                    if ser=='NOT INJURED':
-                        marker=folium.Marker(location=[lat, lon], tooltip='Not Injured', icon=folium.Icon(color='green',icon="o",prefix='fa'))
-                    elif ser=='FATAL INJURY':
-                        marker=folium.Marker(location=[lat, lon], tooltip='Fatal Injury', icon=folium.Icon(color='red',icon="k",prefix='fa'))
-                    elif ser=='UNKNOWN':
-                        marker=folium.Marker(location=[lat, lon], tooltip='Unknown', icon=folium.Icon(color='black',icon="u",prefix='fa'))
-                    elif ser=='SUSPECTED SERIOUS INJURY': 
-                        marker=folium.Marker(location=[lat, lon], tooltip='Suspected Serious Injury', icon=folium.Icon(color='blue',icon="a",prefix='fa'))
-                    elif ser=='SUSPECTED MINOR INJURY': 
-                        marker=folium.Marker(location=[lat, lon], tooltip='Suspected Minor Injury', icon=folium.Icon(color='orange',icon="b",prefix='fa'))
-                    elif ser=='POSSIBLE INJURY': 
-                        marker=folium.Marker(location=[lat, lon], tooltip='Possible Injury', icon=folium.Icon(color='pink',icon="c",prefix='fa'))
-
-                    marker_cluster.add_child(marker)
-                
-                marker_cluster.add_to(m)
-
-
-
-        
-
-            # Display the map in the Streamlit app
-            folium_static(m)
+        # Display the map in the Streamlit app
+        folium_static(m)
 
     #elif data_module == 'Traffic Data':
     elif selected=='Traffic Data 🚦':
