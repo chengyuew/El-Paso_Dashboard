@@ -622,7 +622,7 @@ def dashboard():
         
         #####################################################################
 
-        grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative Positive Curve', 'Cumulative Recovery Curve', 'Cumulative Death Curve']]
+        grouped_data = filtered_data.groupby('zip code').max()[['Cumulative Positive Curve', 'Cumulative Recovery Curve', 'Cumulative Death Curve']]
 
         # Reset the index to make zip code a column
         grouped_data = grouped_data.reset_index()
