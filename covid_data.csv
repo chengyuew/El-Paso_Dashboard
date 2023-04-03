@@ -1,4 +1,4 @@
-zip code,date,Cumulative positive cases,Cumulative recoveries,Cumulative deaths
+zip code,date,Cumulative Positive Curve,Cumulative Recovery Curve,Cumulative Death Curve
 79901,4/23/20,2,2,0
 79901,5/3/20,4,4,0
 79901,5/4/20,5,5,0

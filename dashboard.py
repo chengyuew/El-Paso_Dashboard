@@ -495,14 +495,14 @@ def dashboard():
         traffic_data['postalcode'].replace([np.nan, np.inf, -np.inf], 0, inplace=True)
         traffic_data['postalcode'] = traffic_data['postalcode'].astype(int)
         option3=sorted(traffic_data['postalcode'].unique())
-        option3[0]="All Zip Code"
+        option3[0]="All"
 
-        zip_code = st.sidebar.selectbox('Select a zip code', option3)
+        zip_code = st.sidebar.selectbox('Zip Code', option3)
         option4=['Table','Density Heat Map','Trajectory Visualization']
-        disply_type = st.sidebar.selectbox('Select a display type', option4)
+        disply_type = st.sidebar.selectbox('Display Mode', option4)
         # if zip_code == -1:
         #     zip_code = 'All'
-        if zip_code != "All Zip Code":
+        if zip_code != "All":
             traffic_data = traffic_data[traffic_data['postalcode'] == zip_code]
 
         # st.sidebar.subheader('Authors:')
@@ -602,22 +602,22 @@ def dashboard():
         # Filter the data based on the user's selection
         option5=sorted(covid_data['zip code'].unique())
         
-        option5.insert(0,'All Zip Code')
-        zip_code = st.sidebar.selectbox('Select a zip code', option5)
+        option5.insert(0,'All')
+        zip_code = st.sidebar.selectbox('Zip Code', option5)
 
 
         # Set the date column as the index of the DataFrame
         #filtered_zip_data = filtered_zip_data.set_index('date')
 
         # Create a line chart of the total positive cases, recoveries, and deaths over time
-        option6=['Total COVID cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']
+        #option6=['Total COVID cases table','Bar chart race','Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']
         #variable = st.sidebar.selectbox('Data Display', option6)
-        if zip_code=='All Zip Code':
-            variable=st.sidebar.selectbox('Data Display', ['Total COVID cases table','Bar chart race'])
+        if zip_code=='All':
+            variable=st.sidebar.selectbox('Display Mode', ['Table','Bar Chart'])
         else:
-            variable = st.sidebar.selectbox('Data Display', ['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths'])
+            variable = st.sidebar.selectbox('Display Mode', ['Cumulative Positive Curve', 'Cumulative Recovery Curve', 'Cumulative Death Curve'])
 
-        if variable=='Bar chart race':
+        if variable=='Bar Chart':
             default_start_date = pd.to_datetime('2020-03-01')
             default_end_date = pd.to_datetime('2022-04-01')
 
@@ -645,11 +645,11 @@ def dashboard():
         
         #####################################################################
 
-        grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative positive cases', 'Cumulative recoveries', 'Cumulative deaths']]
+        grouped_data = filtered_data.groupby('zip code').sum()[['Cumulative Positive Curve', 'Cumulative Recovery Curve', 'Cumulative Death Curve']]
 
         # Reset the index to make zip code a column
         grouped_data = grouped_data.reset_index()
-        if zip_code=='All Zip Code':
+        if zip_code=='All':
             filtered_zip_data=filtered_data
         else:
             filtered_zip_data = filtered_data[filtered_data['zip code'] == zip_code]
@@ -665,25 +665,25 @@ def dashboard():
         # CTECH logo and UTEP logo are side-by-side
         st.sidebar.image(['utep_new_logo.png','CTECH.jpeg'], width=150)
     
-        if variable=='Total COVID cases table':
+        if variable=='Table':
             st.write(' Total COVID Cases by Zip Code from ' + str(start_date) + ' to ' + str(end_date))
             st.write(grouped_data) 
-        elif variable=='Cumulative positive cases' or variable=='Cumulative recoveries' or variable=='Cumulative deaths':
+        elif variable=='Cumulative Positive Curve' or variable=='Cumulative Recovery Curve' or variable=='Cumulative Death Curve':
             st.markdown('##### The '+variable+' from ' + str(start_date) + ' to ' + str(end_date) +' in ' +' Zip code '+ str(zip_code))
             filtered_zip_data = filtered_zip_data.rename(columns={'date': 'Date'})
-            if variable == 'Cumulative positive cases':
+            if variable == 'Cumulative Positive Curve':
                 chart = alt.Chart(filtered_zip_data,width=700).mark_area().encode(
                 x='Date:T',
                 y=alt.Y(variable + ':Q', stack=True),
                 color=alt.value('orange')
                 )
-            elif variable == 'Cumulative recoveries':
+            elif variable == 'Cumulative Recovery Curve':
                 chart = alt.Chart(filtered_zip_data,width=700).mark_area().encode(
                 x='Date:T',
                 y=alt.Y(variable + ':Q', stack=True),
                 color=alt.value('green')
                 )
-            elif variable == 'Cumulative deaths':
+            elif variable == 'Cumulative Death Curve':
                 chart = alt.Chart(filtered_zip_data,width=700).mark_area().encode(
                 x='Date:T',
                 y=alt.Y(variable + ':Q', stack=True),
@@ -740,7 +740,7 @@ def dashboard():
 
             # Display the plot in Streamlit
             #st.pyplot(fig)
-        elif variable=='Bar chart race':
+        elif variable=='Bar Chart':
             st.write('The cumulative positive cases of each Zip code in El Paso from 2020-03-01 to 2022-04-01')
             #filtered_bar=filtered_bar.set_index("Zipcode")
             #fig=bcr.bar_chart_race(filtered_bar)
