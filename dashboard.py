@@ -44,7 +44,7 @@ def welcome():
         st.write('')
         st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Demographic data: Population and median income by zip code from 2016 to 2020.</li></ul>", unsafe_allow_html=True)
         st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Crash data: Traffic crashes at intersections in the City of El Paso, Texas from 1/1/2016 to 10/18/2021, downloaded from the Texas Department of Transportation’s (TxDOT’s) Crash Report Information System (CRIS) database. </li></ul>", unsafe_allow_html=True)
-        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Traffic data: Selected vehicle trajectory data in the City of El Paso, Texas from mm/dd/yyyy to mm/dd/yyyy acquired from Wejo.</li></ul>", unsafe_allow_html=True)
+        st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Traffic data: Selected vehicle trajectory data in the City of El Paso, Texas from 10/25/2021 to 11/21/2021 acquired from Wejo.</li></ul>", unsafe_allow_html=True)
         st.write("<ul style='list-style-type: disc;'><li style='margin-left: 40px; font-size: 20px;'>Health data: Live data from the City of El Paso, Texas COVID-19 website. </li></ul>", unsafe_allow_html=True)
         
 
